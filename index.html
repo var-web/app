@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تحميل التطبيق</title>
+    <style>
+        /* استيراد خط جذاب */
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cairo', sans-serif;
+            direction: rtl;
+        }
+
+        body {
+          background: linear-gradient(135deg, #1B263B, #415A77);
+          color: #fff;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          min-height: 100vh;
+          text-align: center;
+          padding: 20px;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 400px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        header h1 {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        header p {
+            font-size: 16px;
+            margin-top: 5px;
+            opacity: 0.8;
+        }
+
+        .app-preview {
+            margin: 20px 0;
+            
+        }
+        
+
+        .app-image {
+            width: 100px;
+             height: 100px;
+            border-radius: 30px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            transform: scale(0.9);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+
+        .app-description {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-size: 16px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+
+        .app-stats {
+            margin-top: 20px;
+            text-align: left;
+            font-size: 16px;
+        }
+
+        .app-stats span {
+            font-weight: bold;
+        }
+
+        .rating {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .rating img {
+            width: 20px;
+            height: 20px;
+            margin-right: 5px;
+        }
+
+        .screenshots {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+
+        .screenshots img {
+            width: 47%;
+            height: 250px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .download-btn {
+            display: inline-block;
+            background: #FF9800;
+            color: #fff;
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-size: 18px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .download-btn:hover {
+            background: #E68900;
+            transform: scale(1.05);
+        }
+
+        footer {
+            margin-top: 15px;
+            font-size: 14px;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>VAR</h1>
+            <p>تجربة جديدة، أداء رائع، وتصميم مذهل!</p>
+        </header>
+        
+        <main>
+            <div class="app-preview">
+                <img src="https://www.mediafire.com/convkey/ea77/sookjjer1jjdwqlzg.jpg?size_id=5" alt="صورة التطبيق" class="app-image">
+            </div>
+
+            <div class="app-description">
+                <p>يقدم تطبيقنا تجربة فريدة وسهلة الاستخدام، مع أداء عالي وتصميم حديث يساعدك على مشاهدة المباريات القديمة مجانا.</p>
+            </div>
+
+            
+
+            <div class="screenshots">
+                <img src="https://www.mediafire.com/convkey/3015/4p1oclbbml994nvzg.jpg" alt="صورة داخل التطبيق 1">
+                <img src="https://www.mediafire.com/convkey/e952/f7elj9tnvrxwyxwzg.jpg" alt="صورة داخل التطبيق 2">
+            </div>
+
+            <a href="https://d.terabox.app/file/d8473fa734b798f3961815d720ac6669?fid=4398864714268-250528-1023985139415476&dstime=1737888057&expires=1737888657&rt=sh&chkv=1&chkpc=et&sign=FDtERVYA-DCb740ccc5511e5e8fedcff06b081203-Gqq700cU2RWD+7BLVbjSSkBGS54=&r=514295481&sharesign=87nmveMVWtvRS6eUnNWPNPQmOPJAIb7NRTVtTxaWcsQ fedKlfyXeHjKDYVxnWwk6fESss/xkEaUjeaycDqs0RasgLLXKtbY9VxzqDXn Ak5pcWTF8u/FOafGwFCLExPNqo2VDPWlMZafQK42IxGx0xADShcDwtqhJn6pmTjEhd Qs5HZbMU441/n1I feJ7nHBqOley2lohAMf1DJBB7kLMmfJZQ zeV2sxqJ8vypTVTKjGUJvNzod5UJupenRYsrg/wwjCx6SjtPysKDs5OrEgYRyus4z71l5Hqsp0g28g4vfv19IOxMmvq9Ri/4O0eumXZo/LF6btKlrs4QHN72VrwojqiehIKKZ/vZbEgfQ=&sh=1&region=jp" class="download-btn">تحميل التطبيق</a>
+        </main>
+        
+        <footer>
+            <p>© 2025 جميع الحقوق محفوظة</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const appImage = document.querySelector(".app-image");
+            const appDescription = document.querySelector(".app-description");
+            const screenshots = document.querySelector(".screenshots");
+
+            setTimeout(() => {
+                appImage.style.opacity = "1";
+                appImage.style.transform = "scale(1)";
+            }, 500);
+
+            setTimeout(() => {
+                appDescription.style.opacity = "1";
+                appDescription.style.transform = "translateY(0)";
+            }, 1000);
+
+            setTimeout(() => {
+                screenshots.style.opacity = "1";
+                screenshots.style.transform = "translateY(0)";
+            }, 1500);
+        });
+    </script>
+</body>
+</html>
