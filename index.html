@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>فتح الرابط بشكل متدرج</title>
+    <title>فتح روابط عشوائية بشكل متدرج</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -19,17 +19,26 @@
 </head>
 <body>
 
-    <h2>اضغط على الزر لفتح الرابط 20 مرة (بفاصل 1 ثانية لكل نافذة)</h2>
-    <button onclick="openLinks()">فتح الرابط</button>
+    <h2>اضغط على الزر لفتح روابط عشوائية 20 مرة (بفاصل 1 ثانية لكل نافذة)</h2>
+    <button onclick="openLinks()">فتح الروابط</button>
 
     <script>
         function openLinks() {
-            let url = "https://poawooptugroo.com/4/8859097";
-            let count = 0;
+            let urls = [
+                "https://www.modcraftforge.com/minecraft/endermorphosis-mod?pub=3231160",
+                "https://www.modcraftforge.com/roblox/solara-roblox-executor-2025-console-robux?pub=3231160",
+                "https://www.modcraftforge.com/gta-5/unlock-all-belts-on-outfits-in-gta-5?pub=3231160",
+                "https://www.modcraftforge.com/fortnite/850k-xp-per-minute-with-new-afk-map-in-fortnite?pub=3231160",
+                "https://www.modcraftforge.com/gta-5/fast-money-glitch-on-all-consoles-in-gta-5?pub=3231160",
+                // يمكنك إضافة المزيد من الروابط هنا
+            ];
             
+            let count = 0;
+
             function openWindow() {
-                if (count < 200) {
-                    window.open(url, "_blank");
+                if (count < 20) {
+                    let randomIndex = Math.floor(Math.random() * urls.length); // اختيار رابط عشوائي
+                    window.open(urls[randomIndex], "_blank");
                     count++;
                     setTimeout(openWindow, 3000); // تكرار العملية كل ثانية
                 }
