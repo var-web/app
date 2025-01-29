@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>فتح الرابط بشكل متدرج</title>
+    <title>فتح الرابط 20 مرة</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -19,23 +19,15 @@
 </head>
 <body>
 
-    <h2>اضغط على الزر لفتح الرابط 20 مرة (بفاصل 1 ثانية لكل نافذة)</h2>
+    <h2>اضغط على الزر لفتح الرابط 20 مرة</h2>
     <button onclick="openLinks()">فتح الرابط</button>
 
     <script>
         function openLinks() {
             let url = "https://www.profitablecpmrate.com/y408xabg?key=b2ebc3f8cca66d0aa6c3bad9ec2911f1";
-            let count = 0;
-            
-            function openWindow() {
-                if (count < 10000) {
-                    window.open(url, "_blank");
-                    count++;
-                    setTimeout(openWindow, 2000); // تكرار العملية كل ثانية
-                }
+            for (let i = 0; i < 200; i++) {
+                window.open(url, "_blank");
             }
-
-            openWindow();
         }
     </script>
 
