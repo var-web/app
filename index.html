@@ -3,31 +3,92 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>فتح الرابط 20 مرة</title>
+    <title>فتح الفيديو في تطبيق خارجي</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 50px;
+            background-color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            height: 100vh;
+            margin: 0;
         }
-        button {
-            padding: 10px 20px;
-            font-size: 16px;
+        .button-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            width: 80%;
+        }
+        .btn {
+            width: 150px;
+            margin: 10px;
+            text-align: center;
+            padding: 10px;
+            font-size: 14px;
+            color: white;
+            background-color: gray;
+            border: none;
+            border-radius: 5px;
             cursor: pointer;
+        }
+        .btn:hover {
+            background-color: #cc0000;
+        }
+        .btn img {
+            width: 50px;
+            height: 50px;
+            margin-bottom: 8px;
         }
     </style>
 </head>
 <body>
 
-    <h2>اضغط على الزر لفتح الرابط 20 مرة</h2>
-    <button onclick="openLinks()">فتح الرابط</button>
+    <div class="button-container">
+        <button class="btn" onclick="openVideo('http://xtream-ie.com/live/mo3ad500b/mo3ad500b/3.m3u8', 'video.player.videoplayer')">
+            <img src="https://play-lh.googleusercontent.com/jBDZq3aBmCXuvtuJHEasqsdYPRxMBGzYmEha4dMlgoIk19Zlh6BGQC08Zt6Ifrmzhg" alt="فيديو 1">
+            <div>bein sports 1</div>
+        </button>
+        <button class="btn" onclick="openVideo('http://xtream-ie.com/live/mo3ad500b/mo3ad500b/4.m3u8', 'video.player.videoplayer')">
+            <img src="https://play-lh.googleusercontent.com/jBDZq3aBmCXuvtuJHEasqsdYPRxMBGzYmEha4dMlgoIk19Zlh6BGQC08Zt6Ifrmzhg" alt="فيديو 2">
+            <div>bein sports 2</div>
+        </button>
+        <button class="btn" onclick="openVideo('http://xtream-ie.com/live/mo3ad500b/mo3ad500b/5.m3u8', 'video.player.videoplayer')">
+            <img src="https://play-lh.googleusercontent.com/jBDZq3aBmCXuvtuJHEasqsdYPRxMBGzYmEha4dMlgoIk19Zlh6BGQC08Zt6Ifrmzhg" alt="فيديو 3">
+            <div>bein sports 3</div>
+        </button>
+        <button class="btn" onclick="openVideo('http://xtream-ie.com/live/mo3ad500b/mo3ad500b/6.m3u8', 'video.player.videoplayer')">
+            <img src="https://play-lh.googleusercontent.com/jBDZq3aBmCXuvtuJHEasqsdYPRxMBGzYmEha4dMlgoIk19Zlh6BGQC08Zt6Ifrmzhg" alt="فيديو 4">
+            <div>bein sports 4</div>
+        </button>
+        <button class="btn" onclick="openVideo('http://xtream-ie.com/live/mo3ad500b/mo3ad500b/7.m3u8', 'video.player.videoplayer')">
+            <img src="https://play-lh.googleusercontent.com/jBDZq3aBmCXuvtuJHEasqsdYPRxMBGzYmEha4dMlgoIk19Zlh6BGQC08Zt6Ifrmzhg" alt="فيديو 5">
+            <div>bein sports 5</div>
+        </button>
+        <button class="btn" onclick="openVideo('http://xtream-ie.com/live/mo3ad500b/mo3ad500b/8.m3u8', 'video.player.videoplayer')">
+            <img src="https://play-lh.googleusercontent.com/jBDZq3aBmCXuvtuJHEasqsdYPRxMBGzYmEha4dMlgoIk19Zlh6BGQC08Zt6Ifrmzhg" alt="فيديو 6">
+            <div>bein sports 6</div>
+        </button>
+        <button class="btn" onclick="openVideo('http://xtream-ie.com/live/mo3ad500b/mo3ad500b/9.m3u8', 'video.player.videoplayer')">
+            <img src="https://play-lh.googleusercontent.com/jBDZq3aBmCXuvtuJHEasqsdYPRxMBGzYmEha4dMlgoIk19Zlh6BGQC08Zt6Ifrmzhg" alt="فيديو 7">
+            <div>bein sports 7</div>
+        </button>
+        <button class="btn" onclick="openVideo('http://xtream-ie.com/live/mo3ad500b/mo3ad500b/10.m3u8', 'video.player.videoplayer')">
+            <img src="https://play-lh.googleusercontent.com/jBDZq3aBmCXuvtuJHEasqsdYPRxMBGzYmEha4dMlgoIk19Zlh6BGQC08Zt6Ifrmzhg" alt="فيديو 8">
+            <div>bein sports 8</div>
+        </button>
+        <button class="btn" onclick="openVideo('http://xtream-ie.com/live/mo3ad500b/mo3ad500b/11.m3u8', 'video.player.videoplayer')">
+            <img src="https://play-lh.googleusercontent.com/jBDZq3aBmCXuvtuJHEasqsdYPRxMBGzYmEha4dMlgoIk19Zlh6BGQC08Zt6Ifrmzhg" alt="فيديو 9">
+            <div>bein sports 9</div>
+        </button>
+    </div>
 
     <script>
-        function openLinks() {
-            let url = "https://hotbkamoda.today/tds?id=1282891822&p1=sub1&p2=sub2&p3=sub3&p4=sub4";
-            for (let i = 0; i < 80; i++) {
-                window.open(url, "_blank");
-            }
+        function openVideo(videoUrl, packageName) {
+            var intentUrl = "intent:" + videoUrl + "#Intent;package=" + packageName + ";end;";
+            window.location.href = intentUrl;
+
+            
         }
     </script>
 
