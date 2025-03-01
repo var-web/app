@@ -155,9 +155,10 @@
     <script>
         function openVideo(videoUrl, packageName) {
             // إذا كان الرابط يبدأ بـ https://dffgtrdb.vffddd.online:8880
-            if (videoUrl.startsWith('https://dffgtrdb.vffddd.online:8880')) {
-                // فتح الرابط في علامة تبويب جديدة
-                window.open(videoUrl, '_blank');
+            if (videoUrl.startsWith('https://dffgtrdb.vffddd.online:8880') || 
+            videoUrl.startsWith('https://vps.vffddd.online:8880')) {
+            // فتح الرابط في علامة تبويب جديدة
+            window.open(videoUrl, '_blank');
             } else {
                 // السلوك الأصلي لبقية الروابط
                 var intentUrl = "intent:" + videoUrl + "#Intent;package=" + packageName + ";end;";
