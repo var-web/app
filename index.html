@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>فتح الفيديو في تطبيق خارجي</title>
+    <title>مشغل الفيديو الداخلي والخارجي</title>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
     <style>
         body {
             background-color: #121212;
@@ -42,11 +43,44 @@
             height: 50px;
             margin-bottom: 8px;
         }
+        
+        /* ستايلات المشغل الداخلي */
+        .video-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 1000;
+        }
+        
+        #videoPlayer {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 40px;
+            color: white;
+            background: none;
+            border: none;
+            cursor: pointer;
+            z-index: 1001;
+        }
     </style>
 </head>
 <body>
 
     <div class="button-container">
+        <!-- جميع أزرار الفيديو هنا كما هي -->
+        <!-- ... -->
+        
         <button class="btn" onclick="openVideo('http://xtream-ie.com/live/mo3ad200i/mo3ad200i/3.m3u8', 'video.player.videoplayer')">
             <img src="https://play-lh.googleusercontent.com/jBDZq3aBmCXuvtuJHEasqsdYPRxMBGzYmEha4dMlgoIk19Zlh6BGQC08Zt6Ifrmzhg" alt="فيديو 1">
             <div>bein sports 1</div>
@@ -153,21 +187,76 @@
             <div>ad sports 1</div>
         </button>
     </div>
+    </div>
+
+    <!-- مشغل الفيديو الداخلي -->
+    <div class="video-container">
+        <video id="videoPlayer" controls></video>
+        <button class="close-btn">×</button>
+    </div>
 
     <script>
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+        
+        document.addEventListener('copy', function(e) {
+            e.preventDefault();
+        });
+
+        let hls;
+        const videoContainer = document.querySelector('.video-container');
+        const videoPlayer = document.getElementById('videoPlayer');
+
+        function shouldPlayInline(videoUrl) {
+            return videoUrl.startsWith('https://dffgtrdb.vffddd.online:8880') || 
+                   videoUrl.startsWith('https://vps.vffddd.online:8880');
+        }
+
         function openVideo(videoUrl, packageName) {
-            // إذا كان الرابط يبدأ بـ https://dffgtrdb.vffddd.online:8880
-            if (videoUrl.startsWith('https://dffgtrdb.vffddd.online:8880') || 
-            videoUrl.startsWith('https://vps.vffddd.online:8880')) {
-            // فتح الرابط في علامة تبويب جديدة
-            window.open(videoUrl, '_blank');
+            if (shouldPlayInline(videoUrl)) {
+                showVideoPlayer(videoUrl);
             } else {
-                // السلوك الأصلي لبقية الروابط
-                var intentUrl = "intent:" + videoUrl + "#Intent;package=" + packageName + ";end;";
+                const intentUrl = `intent:${videoUrl}#Intent;package=${packageName};end;`;
                 window.location.href = intentUrl;
             }
         }
-        
+
+        function showVideoPlayer(videoUrl) {
+            videoContainer.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+
+            if (hls) {
+                hls.destroy();
+            }
+
+            if (videoPlayer.canPlayType('application/vnd.apple.mpegurl')) {
+                videoPlayer.src = videoUrl;
+                videoPlayer.play();
+            } else if (Hls.isSupported()) {
+                hls = new Hls();
+                hls.loadSource(videoUrl);
+                hls.attachMedia(videoPlayer);
+                hls.on(Hls.Events.MANIFEST_PARSED, () => videoPlayer.play());
+            } else {
+                alert('المتصفح لا يدعم تشغيل هذا الفيديو');
+            }
+        }
+
+        // إغلاق المشغل
+        document.querySelector('.close-btn').addEventListener('click', () => {
+            videoContainer.style.display = 'none';
+            document.body.style.overflow = 'auto';
+            videoPlayer.pause();
+            if (hls) {
+                hls.destroy();
+            }
+        });
+
+        // تعديل حجم الفيديو عند تغيير الاتجاه
+        window.addEventListener('resize', () => {
+            videoPlayer.style.objectFit = window.innerHeight > window.innerWidth ? 'contain' : 'fill';
+        });
     </script>
 
 </body>
