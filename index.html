@@ -162,23 +162,23 @@
             <div>bein sports 9 SD</div>
         </button>
         <!-- إضافة الرابط الجديد -->
-        <button class="btn" onclick="openVideo('https://stream.sainaertebat.com/hls2/bein1.m3u8', 'video.player.videoplayer')">
+        <button class="btn" onclick="openVideo('http://109.176.30.135/live/987654/987654/172.m3u8', 'video.player.videoplayer')">
             <img src="https://play-lh.googleusercontent.com/jBDZq3aBmCXuvtuJHEasqsdYPRxMBGzYmEha4dMlgoIk19Zlh6BGQC08Zt6Ifrmzhg" alt="فيديو جديد">
             <div>bein sports 1 low</div>
         </button>
-        <button class="btn" onclick="openVideo('https://stream.sainaertebat.com/hls2/bein2.m3u8', 'video.player.videoplayer')">
+        <button class="btn" onclick="openVideo('http://109.176.30.135/live/987654/987654/173.m3u8', 'video.player.videoplayer')">
             <img src="https://play-lh.googleusercontent.com/jBDZq3aBmCXuvtuJHEasqsdYPRxMBGzYmEha4dMlgoIk19Zlh6BGQC08Zt6Ifrmzhg" alt="فيديو جديد">
             <div>bein sports 2 low</div>
         </button>
-        <button class="btn" onclick="openVideo('https://stream.sainaertebat.com/hls2/bein3.m3u8', 'video.player.videoplayer')">
+        <button class="btn" onclick="openVideo('http://109.176.30.135/live/987654/987654/174.m3u8', 'video.player.videoplayer')">
             <img src="https://play-lh.googleusercontent.com/jBDZq3aBmCXuvtuJHEasqsdYPRxMBGzYmEha4dMlgoIk19Zlh6BGQC08Zt6Ifrmzhg" alt="فيديو جديد">
             <div>bein sports 3 low</div>
         </button>
-        <button class="btn" onclick="openVideo('https://stream.sainaertebat.com/hls2/bein4.m3u8', 'video.player.videoplayer')">
+        <button class="btn" onclick="openVideo('http://109.176.30.135/live/987654/987654/175.m3u8', 'video.player.videoplayer')">
             <img src="https://play-lh.googleusercontent.com/jBDZq3aBmCXuvtuJHEasqsdYPRxMBGzYmEha4dMlgoIk19Zlh6BGQC08Zt6Ifrmzhg" alt="فيديو جديد">
             <div>bein sports 4 low</div>
         </button>
-        <button class="btn" onclick="openVideo('https://stream.sainaertebat.com/hls2/bein5.m3u8', 'video.player.videoplayer')">
+        <button class="btn" onclick="openVideo('http://109.176.30.135/live/987654/987654/176.m3u8', 'video.player.videoplayer')">
             <img src="https://play-lh.googleusercontent.com/jBDZq3aBmCXuvtuJHEasqsdYPRxMBGzYmEha4dMlgoIk19Zlh6BGQC08Zt6Ifrmzhg" alt="فيديو جديد">
             <div>bein sports 5 low</div>
         </button>
@@ -209,8 +209,9 @@
         const videoPlayer = document.getElementById('videoPlayer');
 
         function shouldPlayInline(videoUrl) {
-            return videoUrl.startsWith('https://dffgtrdb.vffddd.online:8880') || 
-                   videoUrl.startsWith('https://vps.vffddd.online:8880');
+            return videoUrl.startsWith('https://stream.sainaertebat.com/') || 
+                   videoUrl.startsWith('https://vps.vffddd.online:8880') || 
+                   videoUrl.startsWith('http://109.176.30.135');
         }
 
         function openVideo(videoUrl, packageName) {
