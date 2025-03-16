@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>قنوات البث المباشر</title>
+    <title>مشغل الفيديو الداخلي والخارجي</title>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
     <style>
         body {
             background-color: #121212;
@@ -11,7 +12,7 @@
             justify-content: center;
             align-items: center;
             flex-wrap: wrap;
-            min-height: 100vh;
+            height: 100vh;
             margin: 0;
         }
         .button-container {
@@ -42,223 +43,220 @@
             height: 50px;
             margin-bottom: 8px;
         }
-
-        /* Popup Styles */
-        .popup-overlay {
+        
+        /* ستايلات المشغل الداخلي */
+        .video-container {
             display: none;
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            justify-content: center;
-            align-items: center;
-            z-index: 999;
-        }
-        .popup-content {
-            position: relative;
-            background: #000;
-            width: 80%;
-            height: 80%;
-            max-width: 800px;
-            max-height: 600px;
-            border: 2px solid darkred;
-            border-radius: 5px;
-        }
-        .close-btn {
-            position: absolute;
-            top: -15px;
-            right: -15px;
-            background: darkred;
-            color: white;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            border: none;
-            cursor: pointer;
-            font-weight: bold;
+            background: rgba(0,0,0,0.9);
             z-index: 1000;
         }
-        .popup-iframe {
+        
+        #videoPlayer {
             width: 100%;
             height: 100%;
+            object-fit: contain;
+        }
+        
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 40px;
+            color: white;
+            background: none;
             border: none;
-            border-radius: 5px;
+            cursor: pointer;
+            z-index: 1001;
         }
     </style>
 </head>
 <body>
 
     <div class="button-container">
-    <!-- قنوات bein الرياضية -->
-    <button class="btn" onclick="openPopup('http://109.176.30.135/live/987654/987654/184.m3u8')">
-        <img src="https://play-lh.googleusercontent.com/jBDZq3aBmCXuvtuJHEasqsdYPRxMBGzYmEha4dMlgoIk19Zlh6BGQC08Zt6Ifrmzhg" alt="bein 1">
-        <div>bein sports 1</div>
-    </button>
-    
-    <button class="btn" onclick="openPopup('http://109.176.30.135/live/987654/987654/185.m3u8')">
-        <img src="https://play-lh.googleusercontent.com/jBDZq3aBmCXuvtuJHEasqsdYPRxMBGzYmEha4dMlgoIk19Zlh6BGQC08Zt6Ifrmzhg" alt="bein 2">
-        <div>bein sports 2</div>
-    </button>
-
-    <button class="btn" onclick="openPopup('http://109.176.30.135/live/987654/987654/186.m3u8')">
-        <img src="https://play-lh.googleusercontent.com/jBDZq3aBmCXuvtuJHEasqsdYPRxMBGzYmEha4dMlgoIk19Zlh6BGQC08Zt6Ifrmzhg" alt="bein 3">
-        <div>bein sports 3</div>
-    </button>
-
-    <button class="btn" onclick="openPopup('http://109.176.30.135/live/987654/987654/187.m3u8')">
-        <img src="https://play-lh.googleusercontent.com/jBDZq3aBmCXuvtuJHEasqsdYPRxMBGzYmEha4dMlgoIk19Zlh6BGQC08Zt6Ifrmzhg" alt="bein 4">
-        <div>bein sports 4</div>
-    </button>
-
-    <button class="btn" onclick="openPopup('http://109.176.30.135/live/987654/987654/188.m3u8')">
-        <img src="https://play-lh.googleusercontent.com/jBDZq3aBmCXuvtuJHEasqsdYPRxMBGzYmEha4dMlgoIk19Zlh6BGQC08Zt6Ifrmzhg" alt="bein 5">
-        <div>bein sports 5</div>
-    </button>
-
-    <button class="btn" onclick="openPopup('http://109.176.30.135/live/987654/987654/189.m3u8')">
-        <img src="https://play-lh.googleusercontent.com/jBDZq3aBmCXuvtuJHEasqsdYPRxMBGzYmEha4dMlgoIk19Zlh6BGQC08Zt6Ifrmzhg" alt="bein 6">
-        <div>bein sports 6</div>
-    </button>
-
-    <button class="btn" onclick="openPopup('http://109.176.30.135/live/987654/987654/190.m3u8')">
-        <img src="https://play-lh.googleusercontent.com/jBDZq3aBmCXuvtuJHEasqsdYPRxMBGzYmEha4dMlgoIk19Zlh6BGQC08Zt6Ifrmzhg" alt="bein 7">
-        <div>bein sports 7</div>
-    </button>
-
-    <button class="btn" onclick="openPopup('http://109.176.30.135/live/987654/987654/191.m3u8')">
-        <img src="https://play-lh.googleusercontent.com/jBDZq3aBmCXuvtuJHEasqsdYPRxMBGzYmEha4dMlgoIk19Zlh6BGQC08Zt6Ifrmzhg" alt="bein 8">
-        <div>bein sports 8</div>
-    </button>
-
-    <button class="btn" onclick="openPopup('http://109.176.30.135/live/987654/987654/192.m3u8')">
-        <img src="https://play-lh.googleusercontent.com/jBDZq3aBmCXuvtuJHEasqsdYPRxMBGzYmEha4dMlgoIk19Zlh6BGQC08Zt6Ifrmzhg" alt="bein 9">
-        <div>bein sports 9</div>
-    </button>
-
-    <!-- قنوات SSC -->
-    <button class="btn" onclick="openPopup('http://109.176.30.135/live/987654/987654/382.m3u8')">
-        <img src="https://yt3.googleusercontent.com/3rps5hznnX26mSwNkMsz5VSZxWoEgXa4HwFT5uMSYKH2-2zyhaN164CYjlHKA_Nay6elcMdggEw=s900-c-k-c0x00ffffff-no-rj" alt="SSC 1">
-        <div>SSC 1</div>
-    </button>
-
-    <button class="btn" onclick="openPopup('http://109.176.30.135/live/987654/987654/383.m3u8')">
-        <img src="https://yt3.googleusercontent.com/3rps5hznnX26mSwNkMsz5VSZxWoEgXa4HwFT5uMSYKH2-2zyhaN164CYjlHKA_Nay6elcMdggEw=s900-c-k-c0x00ffffff-no-rj" alt="SSC 2">
-        <div>SSC 2</div>
-    </button>
-
-    <!-- قنوات SD -->
-    <button class="btn" onclick="openPopup('http://109.176.30.135/live/987654/987654/276.m3u8')">
-        <img src="https://play-lh.googleusercontent.com/jBDZq3aBmCXuvtuJHEasqsdYPRxMBGzYmEha4dMlgoIk19Zlh6BGQC08Zt6Ifrmzhg" alt="SD 1">
-        <div>bein sports 1 SD</div>
-    </button>
-
-    <button class="btn" onclick="openPopup('http://109.176.30.135/live/987654/987654/277.m3u8')">
-        <img src="https://play-lh.googleusercontent.com/jBDZq3aBmCXuvtuJHEasqsdYPRxMBGzYmEha4dMlgoIk19Zlh6BGQC08Zt6Ifrmzhg" alt="SD 2">
-        <div>bein sports 2 SD</div>
-    </button>
-
-    <button class="btn" onclick="openPopup('http://109.176.30.135/live/987654/987654/278.m3u8')">
-        <img src="https://play-lh.googleusercontent.com/jBDZq3aBmCXuvtuJHEasqsdYPRxMBGzYmEha4dMlgoIk19Zlh6BGQC08Zt6Ifrmzhg" alt="SD 3">
-        <div>bein sports 3 SD</div>
-    </button>
-
-    <button class="btn" onclick="openPopup('http://109.176.30.135/live/987654/987654/279.m3u8')">
-        <img src="https://play-lh.googleusercontent.com/jBDZq3aBmCXuvtuJHEasqsdYPRxMBGzYmEha4dMlgoIk19Zlh6BGQC08Zt6Ifrmzhg" alt="SD 4">
-        <div>bein sports 4 SD</div>
-    </button>
-
-    <button class="btn" onclick="openPopup('http://109.176.30.135/live/987654/987654/280.m3u8')">
-        <img src="https://play-lh.googleusercontent.com/jBDZq3aBmCXuvtuJHEasqsdYPRxMBGzYmEha4dMlgoIk19Zlh6BGQC08Zt6Ifrmzhg" alt="SD 5">
-        <div>bein sports 5 SD</div>
-    </button>
-
-    <button class="btn" onclick="openPopup('http://109.176.30.135/live/987654/987654/281.m3u8')">
-        <img src="https://play-lh.googleusercontent.com/jBDZq3aBmCXuvtuJHEasqsdYPRxMBGzYmEha4dMlgoIk19Zlh6BGQC08Zt6Ifrmzhg" alt="SD 6">
-        <div>bein sports 6 SD</div>
-    </button>
-
-    <button class="btn" onclick="openPopup('http://109.176.30.135/live/987654/987654/282.m3u8')">
-        <img src="https://play-lh.googleusercontent.com/jBDZq3aBmCXuvtuJHEasqsdYPRxMBGzYmEha4dMlgoIk19Zlh6BGQC08Zt6Ifrmzhg" alt="SD 7">
-        <div>bein sports 7 SD</div>
-    </button>
-
-    <button class="btn" onclick="openPopup('http://109.176.30.135/live/987654/987654/282.m3u8')">
-        <img src="https://play-lh.googleusercontent.com/jBDZq3aBmCXuvtuJHEasqsdYPRxMBGzYmEha4dMlgoIk19Zlh6BGQC08Zt6Ifrmzhg" alt="SD 8">
-        <div>bein sports 8 SD</div>
-    </button>
-
-    <button class="btn" onclick="openPopup('http://109.176.30.135/live/987654/987654/283.m3u8')">
-        <img src="https://play-lh.googleusercontent.com/jBDZq3aBmCXuvtuJHEasqsdYPRxMBGzYmEha4dMlgoIk19Zlh6BGQC08Zt6Ifrmzhg" alt="SD 9">
-        <div>bein sports 9 SD</div>
-    </button>
-
-    <!-- قنوات Low Quality -->
-    <button class="btn" onclick="openPopup('http://109.176.30.135/live/987654/987654/172.m3u8')">
-        <img src="https://play-lh.googleusercontent.com/jBDZq3aBmCXuvtuJHEasqsdYPRxMBGzYmEha4dMlgoIk19Zlh6BGQC08Zt6Ifrmzhg" alt="Low 1">
-        <div>bein sports 1 low</div>
-    </button>
-
-    <button class="btn" onclick="openPopup('http://109.176.30.135/live/987654/987654/173.m3u8')">
-        <img src="https://play-lh.googleusercontent.com/jBDZq3aBmCXuvtuJHEasqsdYPRxMBGzYmEha4dMlgoIk19Zlh6BGQC08Zt6Ifrmzhg" alt="Low 2">
-        <div>bein sports 2 low</div>
-    </button>
-
-    <button class="btn" onclick="openPopup('http://109.176.30.135/live/987654/987654/174.m3u8')">
-        <img src="https://play-lh.googleusercontent.com/jBDZq3aBmCXuvtuJHEasqsdYPRxMBGzYmEha4dMlgoIk19Zlh6BGQC08Zt6Ifrmzhg" alt="Low 3">
-        <div>bein sports 3 low</div>
-    </button>
-
-    <button class="btn" onclick="openPopup('http://109.176.30.135/live/987654/987654/175.m3u8')">
-        <img src="https://play-lh.googleusercontent.com/jBDZq3aBmCXuvtuJHEasqsdYPRxMBGzYmEha4dMlgoIk19Zlh6BGQC08Zt6Ifrmzhg" alt="Low 4">
-        <div>bein sports 4 low</div>
-    </button>
-
-    <button class="btn" onclick="openPopup('http://109.176.30.135/live/987654/987654/176.m3u8')">
-        <img src="https://play-lh.googleusercontent.com/jBDZq3aBmCXuvtuJHEasqsdYPRxMBGzYmEha4dMlgoIk19Zlh6BGQC08Zt6Ifrmzhg" alt="Low 5">
-        <div>bein sports 5 low</div>
-    </button>
-
-    <!-- قناة AD Sports -->
-    <button class="btn" onclick="openPopup('https://vps.vffddd.online:8880/adsp1/index.m3u8')">
-        <img src="https://cdn6.aptoide.com/imgs/6/4/3/64382c91ce40f9f941bc4dae5085fc8c_icon.png" alt="AD Sports">
-        <div>ad sports 1</div>
-    </button>
-</div>
-        <!-- بقية الأزرار بنفس النمط مع استبدال window.open بـ openPopup -->
-        <!-- ... (جميع الأزرار المتبقية بنفس التعديل) ... -->
+        <!-- جميع أزرار الفيديو هنا كما هي -->
+        <!-- ... -->
+        
+        <button class="btn" onclick="openVideo('http://xtream-ie.com/live/mo3ad200i/mo3ad200i/3.m3u8', 'video.player.videoplayer')">
+            <img src="https://play-lh.googleusercontent.com/jBDZq3aBmCXuvtuJHEasqsdYPRxMBGzYmEha4dMlgoIk19Zlh6BGQC08Zt6Ifrmzhg" alt="فيديو 1">
+            <div>bein sports 1</div>
+        </button>
+        <button class="btn" onclick="openVideo('http://xtream-ie.com/live/mo3ad200i/mo3ad200i/4.m3u8', 'video.player.videoplayer')">
+            <img src="https://play-lh.googleusercontent.com/jBDZq3aBmCXuvtuJHEasqsdYPRxMBGzYmEha4dMlgoIk19Zlh6BGQC08Zt6Ifrmzhg" alt="فيديو 2">
+            <div>bein sports 2</div>
+        </button>
+        <button class="btn" onclick="openVideo('http://xtream-ie.com/live/mo3ad200i/mo3ad200i/5.m3u8', 'video.player.videoplayer')">
+            <img src="https://play-lh.googleusercontent.com/jBDZq3aBmCXuvtuJHEasqsdYPRxMBGzYmEha4dMlgoIk19Zlh6BGQC08Zt6Ifrmzhg" alt="فيديو 3">
+            <div>bein sports 3</div>
+        </button>
+        <button class="btn" onclick="openVideo('http://xtream-ie.com/live/mo3ad200i/mo3ad200i/6.m3u8', 'video.player.videoplayer')">
+            <img src="https://play-lh.googleusercontent.com/jBDZq3aBmCXuvtuJHEasqsdYPRxMBGzYmEha4dMlgoIk19Zlh6BGQC08Zt6Ifrmzhg" alt="فيديو 4">
+            <div>bein sports 4</div>
+        </button>
+        <button class="btn" onclick="openVideo('http://xtream-ie.com/live/mo3ad200i/mo3ad200i/7.m3u8', 'video.player.videoplayer')">
+            <img src="https://play-lh.googleusercontent.com/jBDZq3aBmCXuvtuJHEasqsdYPRxMBGzYmEha4dMlgoIk19Zlh6BGQC08Zt6Ifrmzhg" alt="فيديو 5">
+            <div>bein sports 5</div>
+        </button>
+        <button class="btn" onclick="openVideo('http://xtream-ie.com/live/mo3ad200i/mo3ad200i/8.m3u8', 'video.player.videoplayer')">
+            <img src="https://play-lh.googleusercontent.com/jBDZq3aBmCXuvtuJHEasqsdYPRxMBGzYmEha4dMlgoIk19Zlh6BGQC08Zt6Ifrmzhg" alt="فيديو 6">
+            <div>bein sports 6</div>
+        </button>
+        <button class="btn" onclick="openVideo('http://xtream-ie.com/live/mo3ad200i/mo3ad200i/9.m3u8', 'video.player.videoplayer')">
+            <img src="https://play-lh.googleusercontent.com/jBDZq3aBmCXuvtuJHEasqsdYPRxMBGzYmEha4dMlgoIk19Zlh6BGQC08Zt6Ifrmzhg" alt="فيديو 7">
+            <div>bein sports 7</div>
+        </button>
+        <button class="btn" onclick="openVideo('http://xtream-ie.com/live/mo3ad200i/mo3ad200i/10.m3u8', 'video.player.videoplayer')">
+            <img src="https://play-lh.googleusercontent.com/jBDZq3aBmCXuvtuJHEasqsdYPRxMBGzYmEha4dMlgoIk19Zlh6BGQC08Zt6Ifrmzhg" alt="فيديو 8">
+            <div>bein sports 8</div>
+        </button>
+        <button class="btn" onclick="openVideo('http://xtream-ie.com/live/mo3ad200i/mo3ad200i/11.m3u8', 'video.player.videoplayer')">
+            <img src="https://play-lh.googleusercontent.com/jBDZq3aBmCXuvtuJHEasqsdYPRxMBGzYmEha4dMlgoIk19Zlh6BGQC08Zt6Ifrmzhg" alt="فيديو 9">
+            <div>bein sports 9</div>
+        </button>
+        <button class="btn" onclick="openVideo('http://xtream-ie.com/live/mo3ad200i/mo3ad200i/70.m3u8', 'video.player.videoplayer')">
+            <img src="https://yt3.googleusercontent.com/3rps5hznnX26mSwNkMsz5VSZxWoEgXa4HwFT5uMSYKH2-2zyhaN164CYjlHKA_Nay6elcMdggEw=s900-c-k-c0x00ffffff-no-rj" alt="فيديو 8">
+            <div>SSC 1</div>
+        </button>
+        <button class="btn" onclick="openVideo('http://xtream-ie.com/live/mo3ad200i/mo3ad200i/71.m3u8', 'video.player.videoplayer')">
+            <img src="https://yt3.googleusercontent.com/3rps5hznnX26mSwNkMsz5VSZxWoEgXa4HwFT5uMSYKH2-2zyhaN164CYjlHKA_Nay6elcMdggEw=s900-c-k-c0x00ffffff-no-rj" alt="فيديو 9">
+            <div>SSC 2</div>
+        </button>
+        <button class="btn" onclick="openVideo('http://xtream-ie.com/live/mo3ad200i/mo3ad200i/29.m3u8', 'video.player.videoplayer')">
+            <img src="https://play-lh.googleusercontent.com/jBDZq3aBmCXuvtuJHEasqsdYPRxMBGzYmEha4dMlgoIk19Zlh6BGQC08Zt6Ifrmzhg" alt="فيديو 1">
+            <div>bein sports 1 SD</div>
+        </button>
+        <button class="btn" onclick="openVideo('http://xtream-ie.com/live/mo3ad200i/mo3ad200i/30.m3u8', 'video.player.videoplayer')">
+            <img src="https://play-lh.googleusercontent.com/jBDZq3aBmCXuvtuJHEasqsdYPRxMBGzYmEha4dMlgoIk19Zlh6BGQC08Zt6Ifrmzhg" alt="فيديو 2">
+            <div>bein sports 2 SD</div>
+        </button>
+        <button class="btn" onclick="openVideo('http://xtream-ie.com/live/mo3ad200i/mo3ad200i/31.m3u8', 'video.player.videoplayer')">
+            <img src="https://play-lh.googleusercontent.com/jBDZq3aBmCXuvtuJHEasqsdYPRxMBGzYmEha4dMlgoIk19Zlh6BGQC08Zt6Ifrmzhg" alt="فيديو 3">
+            <div>bein sports 3 SD</div>
+        </button>
+        <button class="btn" onclick="openVideo('http://xtream-ie.com/live/mo3ad200i/mo3ad200i/32.m3u8', 'video.player.videoplayer')">
+            <img src="https://play-lh.googleusercontent.com/jBDZq3aBmCXuvtuJHEasqsdYPRxMBGzYmEha4dMlgoIk19Zlh6BGQC08Zt6Ifrmzhg" alt="فيديو 4">
+            <div>bein sports 4 SD</div>
+        </button>
+        <button class="btn" onclick="openVideo('http://xtream-ie.com/live/mo3ad200i/mo3ad200i/33.m3u8', 'video.player.videoplayer')">
+            <img src="https://play-lh.googleusercontent.com/jBDZq3aBmCXuvtuJHEasqsdYPRxMBGzYmEha4dMlgoIk19Zlh6BGQC08Zt6Ifrmzhg" alt="فيديو 5">
+            <div>bein sports 5 SD</div>
+        </button>
+        <button class="btn" onclick="openVideo('http://xtream-ie.com/live/mo3ad200i/mo3ad200i/34.m3u8', 'video.player.videoplayer')">
+            <img src="https://play-lh.googleusercontent.com/jBDZq3aBmCXuvtuJHEasqsdYPRxMBGzYmEha4dMlgoIk19Zlh6BGQC08Zt6Ifrmzhg" alt="فيديو 6">
+            <div>bein sports 6 SD</div>
+        </button>
+        <button class="btn" onclick="openVideo('http://xtream-ie.com/live/mo3ad200i/mo3ad200i/35.m3u8', 'video.player.videoplayer')">
+            <img src="https://play-lh.googleusercontent.com/jBDZq3aBmCXuvtuJHEasqsdYPRxMBGzYmEha4dMlgoIk19Zlh6BGQC08Zt6Ifrmzhg" alt="فيديو 7">
+            <div>bein sports 7 SD</div>
+        </button>
+        <button class="btn" onclick="openVideo('http://xtream-ie.com/live/mo3ad200i/mo3ad200i/36.m3u8', 'video.player.videoplayer')">
+            <img src="https://play-lh.googleusercontent.com/jBDZq3aBmCXuvtuJHEasqsdYPRxMBGzYmEha4dMlgoIk19Zlh6BGQC08Zt6Ifrmzhg" alt="فيديو 8">
+            <div>bein sports 8 SD</div>
+        </button>
+        <button class="btn" onclick="openVideo('http://xtream-ie.com/live/mo3ad200i/mo3ad200i/37.m3u8', 'video.player.videoplayer')">
+            <img src="https://play-lh.googleusercontent.com/jBDZq3aBmCXuvtuJHEasqsdYPRxMBGzYmEha4dMlgoIk19Zlh6BGQC08Zt6Ifrmzhg" alt="فيديو 9">
+            <div>bein sports 9 SD</div>
+        </button>
+        <!-- إضافة الرابط الجديد -->
+        <button class="btn" onclick="openVideo('https://stream.sainaertebat.com/hls2/bein1.m3u8', 'video.player.videoplayer')">
+            <img src="https://play-lh.googleusercontent.com/jBDZq3aBmCXuvtuJHEasqsdYPRxMBGzYmEha4dMlgoIk19Zlh6BGQC08Zt6Ifrmzhg" alt="فيديو جديد">
+            <div>bein sports 1 low</div>
+        </button>
+        <button class="btn" onclick="openVideo('https://stream.sainaertebat.com/hls2/bein2.m3u8', 'video.player.videoplayer')">
+            <img src="https://play-lh.googleusercontent.com/jBDZq3aBmCXuvtuJHEasqsdYPRxMBGzYmEha4dMlgoIk19Zlh6BGQC08Zt6Ifrmzhg" alt="فيديو جديد">
+            <div>bein sports 2 low</div>
+        </button>
+        <button class="btn" onclick="openVideo('https://stream.sainaertebat.com/hls2/bein3.m3u8', 'video.player.videoplayer')">
+            <img src="https://play-lh.googleusercontent.com/jBDZq3aBmCXuvtuJHEasqsdYPRxMBGzYmEha4dMlgoIk19Zlh6BGQC08Zt6Ifrmzhg" alt="فيديو جديد">
+            <div>bein sports 3 low</div>
+        </button>
+        <button class="btn" onclick="openVideo('https://stream.sainaertebat.com/hls2/bein4.m3u8', 'video.player.videoplayer')">
+            <img src="https://play-lh.googleusercontent.com/jBDZq3aBmCXuvtuJHEasqsdYPRxMBGzYmEha4dMlgoIk19Zlh6BGQC08Zt6Ifrmzhg" alt="فيديو جديد">
+            <div>bein sports 4 low</div>
+        </button>
+        <button class="btn" onclick="openVideo('https://stream.sainaertebat.com/hls2/bein5.m3u8', 'video.player.videoplayer')">
+            <img src="https://play-lh.googleusercontent.com/jBDZq3aBmCXuvtuJHEasqsdYPRxMBGzYmEha4dMlgoIk19Zlh6BGQC08Zt6Ifrmzhg" alt="فيديو جديد">
+            <div>bein sports 5 low</div>
+        </button>
+        <button class="btn" onclick="openVideo('https://vps.vffddd.online:8880/adsp1/index.m3u8', 'video.player.videoplayer')">
+            <img src="https://cdn6.aptoide.com/imgs/6/4/3/64382c91ce40f9f941bc4dae5085fc8c_icon.png" alt="فيديو جديد">
+            <div>ad sports 1</div>
+        </button>
+    </div>
     </div>
 
-    <!-- Popup Structure -->
-    <div class="popup-overlay" id="popup">
-        <div class="popup-content">
-            <button class="close-btn" onclick="closePopup()">×</button>
-            <iframe class="popup-iframe" id="popup-iframe"></iframe>
-        </div>
+    <!-- مشغل الفيديو الداخلي -->
+    <div class="video-container">
+        <video id="videoPlayer" controls></video>
+        <button class="close-btn">×</button>
     </div>
 
     <script>
-        function openPopup(url) {
-            const popup = document.getElementById('popup');
-            const iframe = document.getElementById('popup-iframe');
-            iframe.src = url;
-            popup.style.display = 'flex';
-        }
-
-        function closePopup() {
-            const popup = document.getElementById('popup');
-            const iframe = document.getElementById('popup-iframe');
-            iframe.src = '';
-            popup.style.display = 'none';
-        }
-
         document.addEventListener('contextmenu', function(e) {
             e.preventDefault();
         });
         
         document.addEventListener('copy', function(e) {
             e.preventDefault();
+        });
+
+        let hls;
+        const videoContainer = document.querySelector('.video-container');
+        const videoPlayer = document.getElementById('videoPlayer');
+
+        function shouldPlayInline(videoUrl) {
+            return videoUrl.startsWith('https://stream.sainaertebat.com/') || 
+                   videoUrl.startsWith('https://vps.vffddd.online:8880') || 
+                   videoUrl.startsWith('http://109.176.30.135');
+        }
+
+        function openVideo(videoUrl, packageName) {
+            if (shouldPlayInline(videoUrl)) {
+                showVideoPlayer(videoUrl);
+            } else {
+                const intentUrl = `intent:${videoUrl}#Intent;package=${packageName};end;`;
+                window.location.href = intentUrl;
+            }
+        }
+
+        function showVideoPlayer(videoUrl) {
+            videoContainer.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+
+            if (hls) {
+                hls.destroy();
+            }
+
+            if (videoPlayer.canPlayType('application/vnd.apple.mpegurl')) {
+                videoPlayer.src = videoUrl;
+                videoPlayer.play();
+            } else if (Hls.isSupported()) {
+                hls = new Hls();
+                hls.loadSource(videoUrl);
+                hls.attachMedia(videoPlayer);
+                hls.on(Hls.Events.MANIFEST_PARSED, () => videoPlayer.play());
+            } else {
+                alert('المتصفح لا يدعم تشغيل هذا الفيديو');
+            }
+        }
+
+        // إغلاق المشغل
+        document.querySelector('.close-btn').addEventListener('click', () => {
+            videoContainer.style.display = 'none';
+            document.body.style.overflow = 'auto';
+            videoPlayer.pause();
+            if (hls) {
+                hls.destroy();
+            }
+        });
+
+        // تعديل حجم الفيديو عند تغيير الاتجاه
+        window.addEventListener('resize', () => {
+            videoPlayer.style.objectFit = window.innerHeight > window.innerWidth ? 'contain' : 'fill';
         });
     </script>
 
