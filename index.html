@@ -1,265 +1,205 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
-    <meta name='admaven-placement' content=BqdC8rHn7>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مشغل الفيديو الداخلي والخارجي</title>
-    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-    <style>
-        body {
-            background-color: #121212;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-wrap: wrap;
-            height: 100vh;
-            margin: 0;
-        }
-        .button-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-around;
-            width: 80%;
-        }
-        .btn {
-            width: 150px;
-            margin: 10px;
-            text-align: center;
-            padding: 10px;
-            font-size: 14px;
-            color: white;
-            background-color: black;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            border: 2px solid darkred;
-            -webkit-tap-highlight-color: transparent;
-        }
-        .btn:hover {
-            background-color: #cc0000;
-        }
-        .btn img {
-            width: 50px;
-            height: 50px;
-            margin-bottom: 8px;
-        }
-        
-        /* ستايلات المشغل الداخلي */
-        .video-container {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.9);
-            z-index: 1000;
-        }
-        
-        #videoPlayer {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-        
-        .close-btn {
-            position: absolute;
-            top: 20px;
-            right: 30px;
-            font-size: 40px;
-            color: white;
-            background: none;
-            border: none;
-            cursor: pointer;
-            z-index: 1001;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>قنوات البث</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin: 0;
+      background: radial-gradient(circle, #1a1a1a, #121212);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #eee;
+    }
+
+    header {
+      padding: 30px;
+      text-align: center;
+      background: #121212;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+      position: sticky;
+      top: 0;
+      z-index: 999;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 3em;
+      color: #ff00ff;
+      text-shadow: 0 0 10px rgba(255, 0, 255, 0.7), 0 0 20px rgba(255, 0, 255, 0.5);
+      letter-spacing: 4px;
+      font-weight: bold;
+    }
+
+    #channelList {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 20px;
+      padding: 40px;
+    }
+
+    .channel {
+      background: linear-gradient(45deg, #2a2a2a, #333);
+      padding: 25px;
+      border-radius: 16px;
+      box-shadow: 0 4px 15px rgba(0, 255, 255, 0.2);
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .channel:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 10px 25px rgba(0, 255, 255, 0.5);
+    }
+
+    .channel span {
+      font-size: 1.2em;
+      color: #fff;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      transition: color 0.3s ease;
+    }
+
+    .channel:hover span {
+      color: #00ffff;
+    }
+
+    #overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      display: none;
+      z-index: 1000;
+      cursor: pointer;
+    }
+
+    #playerPopup {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: black;
+      z-index: 1001;
+      display: none;
+      animation: fadeIn 0.5s ease-out;
+    }
+
+    #playerPopup video {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      pointer-events: none;
+      background: black;
+    }
+
+    @media screen and (orientation: landscape) {
+      #playerPopup video {
+        object-fit: fill;
+      }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+    body {
+  user-select: none; /* يمنع تحديد النص */
+}
+
+* {
+  -webkit-user-select: none; /* على المتصفحات التي تعتمد على WebKit */
+  -moz-user-select: none; /* على المتصفحات التي تعتمد على Mozilla */
+  -ms-user-select: none; /* على متصفحات مايكروسوفت */
+}
+    *
+    {-webkit-tap-highlight-color:
+    transparent;}
+  </style>
 </head>
 <body>
 
-    <div class="button-container">
-        <!-- جميع أزرار الفيديو هنا كما هي -->
-        <!-- ... -->
-        
-        <button class="btn" onclick="openVideo('http://xtream-ie.com/live/mo3ad200i/mo3ad200i/3.m3u8', 'video.player.videoplayer')">
-            <img src="https://play-lh.googleusercontent.com/jBDZq3aBmCXuvtuJHEasqsdYPRxMBGzYmEha4dMlgoIk19Zlh6BGQC08Zt6Ifrmzhg" alt="فيديو 1">
-            <div>bein sports 1</div>
-        </button>
-        <button class="btn" onclick="openVideo('http://xtream-ie.com/live/mo3ad200i/mo3ad200i/4.m3u8', 'video.player.videoplayer')">
-            <img src="https://play-lh.googleusercontent.com/jBDZq3aBmCXuvtuJHEasqsdYPRxMBGzYmEha4dMlgoIk19Zlh6BGQC08Zt6Ifrmzhg" alt="فيديو 2">
-            <div>bein sports 2</div>
-        </button>
-        <button class="btn" onclick="openVideo('http://xtream-ie.com/live/mo3ad200i/mo3ad200i/5.m3u8', 'video.player.videoplayer')">
-            <img src="https://play-lh.googleusercontent.com/jBDZq3aBmCXuvtuJHEasqsdYPRxMBGzYmEha4dMlgoIk19Zlh6BGQC08Zt6Ifrmzhg" alt="فيديو 3">
-            <div>bein sports 3</div>
-        </button>
-        <button class="btn" onclick="openVideo('http://xtream-ie.com/live/mo3ad200i/mo3ad200i/6.m3u8', 'video.player.videoplayer')">
-            <img src="https://play-lh.googleusercontent.com/jBDZq3aBmCXuvtuJHEasqsdYPRxMBGzYmEha4dMlgoIk19Zlh6BGQC08Zt6Ifrmzhg" alt="فيديو 4">
-            <div>bein sports 4</div>
-        </button>
-        <button class="btn" onclick="openVideo('http://xtream-ie.com/live/mo3ad200i/mo3ad200i/7.m3u8', 'video.player.videoplayer')">
-            <img src="https://play-lh.googleusercontent.com/jBDZq3aBmCXuvtuJHEasqsdYPRxMBGzYmEha4dMlgoIk19Zlh6BGQC08Zt6Ifrmzhg" alt="فيديو 5">
-            <div>bein sports 5</div>
-        </button>
-        <button class="btn" onclick="openVideo('http://xtream-ie.com/live/mo3ad200i/mo3ad200i/8.m3u8', 'video.player.videoplayer')">
-            <img src="https://play-lh.googleusercontent.com/jBDZq3aBmCXuvtuJHEasqsdYPRxMBGzYmEha4dMlgoIk19Zlh6BGQC08Zt6Ifrmzhg" alt="فيديو 6">
-            <div>bein sports 6</div>
-        </button>
-        <button class="btn" onclick="openVideo('http://xtream-ie.com/live/mo3ad200i/mo3ad200i/9.m3u8', 'video.player.videoplayer')">
-            <img src="https://play-lh.googleusercontent.com/jBDZq3aBmCXuvtuJHEasqsdYPRxMBGzYmEha4dMlgoIk19Zlh6BGQC08Zt6Ifrmzhg" alt="فيديو 7">
-            <div>bein sports 7</div>
-        </button>
-        <button class="btn" onclick="openVideo('http://xtream-ie.com/live/mo3ad200i/mo3ad200i/10.m3u8', 'video.player.videoplayer')">
-            <img src="https://play-lh.googleusercontent.com/jBDZq3aBmCXuvtuJHEasqsdYPRxMBGzYmEha4dMlgoIk19Zlh6BGQC08Zt6Ifrmzhg" alt="فيديو 8">
-            <div>bein sports 8</div>
-        </button>
-        <button class="btn" onclick="openVideo('http://xtream-ie.com/live/mo3ad200i/mo3ad200i/11.m3u8', 'video.player.videoplayer')">
-            <img src="https://play-lh.googleusercontent.com/jBDZq3aBmCXuvtuJHEasqsdYPRxMBGzYmEha4dMlgoIk19Zlh6BGQC08Zt6Ifrmzhg" alt="فيديو 9">
-            <div>bein sports 9</div>
-        </button>
-        <button class="btn" onclick="openVideo('http://xtream-ie.com/live/mo3ad200i/mo3ad200i/70.m3u8', 'video.player.videoplayer')">
-            <img src="https://yt3.googleusercontent.com/3rps5hznnX26mSwNkMsz5VSZxWoEgXa4HwFT5uMSYKH2-2zyhaN164CYjlHKA_Nay6elcMdggEw=s900-c-k-c0x00ffffff-no-rj" alt="فيديو 8">
-            <div>SSC 1</div>
-        </button>
-        <button class="btn" onclick="openVideo('http://xtream-ie.com/live/mo3ad200i/mo3ad200i/71.m3u8', 'video.player.videoplayer')">
-            <img src="https://yt3.googleusercontent.com/3rps5hznnX26mSwNkMsz5VSZxWoEgXa4HwFT5uMSYKH2-2zyhaN164CYjlHKA_Nay6elcMdggEw=s900-c-k-c0x00ffffff-no-rj" alt="فيديو 9">
-            <div>SSC 2</div>
-        </button>
-        <button class="btn" onclick="openVideo('http://xtream-ie.com/live/mo3ad200i/mo3ad200i/29.m3u8', 'video.player.videoplayer')">
-            <img src="https://play-lh.googleusercontent.com/jBDZq3aBmCXuvtuJHEasqsdYPRxMBGzYmEha4dMlgoIk19Zlh6BGQC08Zt6Ifrmzhg" alt="فيديو 1">
-            <div>bein sports 1 SD</div>
-        </button>
-        <button class="btn" onclick="openVideo('http://xtream-ie.com/live/mo3ad200i/mo3ad200i/30.m3u8', 'video.player.videoplayer')">
-            <img src="https://play-lh.googleusercontent.com/jBDZq3aBmCXuvtuJHEasqsdYPRxMBGzYmEha4dMlgoIk19Zlh6BGQC08Zt6Ifrmzhg" alt="فيديو 2">
-            <div>bein sports 2 SD</div>
-        </button>
-        <button class="btn" onclick="openVideo('http://xtream-ie.com/live/mo3ad200i/mo3ad200i/31.m3u8', 'video.player.videoplayer')">
-            <img src="https://play-lh.googleusercontent.com/jBDZq3aBmCXuvtuJHEasqsdYPRxMBGzYmEha4dMlgoIk19Zlh6BGQC08Zt6Ifrmzhg" alt="فيديو 3">
-            <div>bein sports 3 SD</div>
-        </button>
-        <button class="btn" onclick="openVideo('http://xtream-ie.com/live/mo3ad200i/mo3ad200i/32.m3u8', 'video.player.videoplayer')">
-            <img src="https://play-lh.googleusercontent.com/jBDZq3aBmCXuvtuJHEasqsdYPRxMBGzYmEha4dMlgoIk19Zlh6BGQC08Zt6Ifrmzhg" alt="فيديو 4">
-            <div>bein sports 4 SD</div>
-        </button>
-        <button class="btn" onclick="openVideo('http://xtream-ie.com/live/mo3ad200i/mo3ad200i/33.m3u8', 'video.player.videoplayer')">
-            <img src="https://play-lh.googleusercontent.com/jBDZq3aBmCXuvtuJHEasqsdYPRxMBGzYmEha4dMlgoIk19Zlh6BGQC08Zt6Ifrmzhg" alt="فيديو 5">
-            <div>bein sports 5 SD</div>
-        </button>
-        <button class="btn" onclick="openVideo('http://xtream-ie.com/live/mo3ad200i/mo3ad200i/34.m3u8', 'video.player.videoplayer')">
-            <img src="https://play-lh.googleusercontent.com/jBDZq3aBmCXuvtuJHEasqsdYPRxMBGzYmEha4dMlgoIk19Zlh6BGQC08Zt6Ifrmzhg" alt="فيديو 6">
-            <div>bein sports 6 SD</div>
-        </button>
-        <button class="btn" onclick="openVideo('http://xtream-ie.com/live/mo3ad200i/mo3ad200i/35.m3u8', 'video.player.videoplayer')">
-            <img src="https://play-lh.googleusercontent.com/jBDZq3aBmCXuvtuJHEasqsdYPRxMBGzYmEha4dMlgoIk19Zlh6BGQC08Zt6Ifrmzhg" alt="فيديو 7">
-            <div>bein sports 7 SD</div>
-        </button>
-        <button class="btn" onclick="openVideo('http://xtream-ie.com/live/mo3ad200i/mo3ad200i/36.m3u8', 'video.player.videoplayer')">
-            <img src="https://play-lh.googleusercontent.com/jBDZq3aBmCXuvtuJHEasqsdYPRxMBGzYmEha4dMlgoIk19Zlh6BGQC08Zt6Ifrmzhg" alt="فيديو 8">
-            <div>bein sports 8 SD</div>
-        </button>
-        <button class="btn" onclick="openVideo('http://xtream-ie.com/live/mo3ad200i/mo3ad200i/37.m3u8', 'video.player.videoplayer')">
-            <img src="https://play-lh.googleusercontent.com/jBDZq3aBmCXuvtuJHEasqsdYPRxMBGzYmEha4dMlgoIk19Zlh6BGQC08Zt6Ifrmzhg" alt="فيديو 9">
-            <div>bein sports 9 SD</div>
-        </button>
-        <!-- إضافة الرابط الجديد -->
-        <button class="btn" onclick="openVideo('https://stream.sainaertebat.com/hls2/bein1.m3u8', 'video.player.videoplayer')">
-            <img src="https://play-lh.googleusercontent.com/jBDZq3aBmCXuvtuJHEasqsdYPRxMBGzYmEha4dMlgoIk19Zlh6BGQC08Zt6Ifrmzhg" alt="فيديو جديد">
-            <div>bein sports 1 low</div>
-        </button>
-        <button class="btn" onclick="openVideo('https://stream.sainaertebat.com/hls2/bein2.m3u8', 'video.player.videoplayer')">
-            <img src="https://play-lh.googleusercontent.com/jBDZq3aBmCXuvtuJHEasqsdYPRxMBGzYmEha4dMlgoIk19Zlh6BGQC08Zt6Ifrmzhg" alt="فيديو جديد">
-            <div>bein sports 2 low</div>
-        </button>
-        <button class="btn" onclick="openVideo('https://stream.sainaertebat.com/hls2/bein3.m3u8', 'video.player.videoplayer')">
-            <img src="https://play-lh.googleusercontent.com/jBDZq3aBmCXuvtuJHEasqsdYPRxMBGzYmEha4dMlgoIk19Zlh6BGQC08Zt6Ifrmzhg" alt="فيديو جديد">
-            <div>bein sports 3 low</div>
-        </button>
-        <button class="btn" onclick="openVideo('https://stream.sainaertebat.com/hls2/bein4.m3u8', 'video.player.videoplayer')">
-            <img src="https://play-lh.googleusercontent.com/jBDZq3aBmCXuvtuJHEasqsdYPRxMBGzYmEha4dMlgoIk19Zlh6BGQC08Zt6Ifrmzhg" alt="فيديو جديد">
-            <div>bein sports 4 low</div>
-        </button>
-        <button class="btn" onclick="openVideo('https://stream.sainaertebat.com/hls2/bein5.m3u8', 'video.player.videoplayer')">
-            <img src="https://play-lh.googleusercontent.com/jBDZq3aBmCXuvtuJHEasqsdYPRxMBGzYmEha4dMlgoIk19Zlh6BGQC08Zt6Ifrmzhg" alt="فيديو جديد">
-            <div>bein sports 5 low</div>
-        </button>
-        <button class="btn" onclick="openVideo('https://vps.vffddd.online:8880/adsp1/index.m3u8', 'video.player.videoplayer')">
-            <img src="https://cdn6.aptoide.com/imgs/6/4/3/64382c91ce40f9f941bc4dae5085fc8c_icon.png" alt="فيديو جديد">
-            <div>ad sports 1</div>
-        </button>
-    </div>
-    </div>
 
-    <!-- مشغل الفيديو الداخلي -->
-    <div class="video-container">
-        <video id="videoPlayer" controls></video>
-        <button class="close-btn">×</button>
-    </div>
+  <div id="channelList"></div>
 
-    <script>
-        document.addEventListener('contextmenu', function(e) {
-            e.preventDefault();
-        });
-        
-        document.addEventListener('copy', function(e) {
-            e.preventDefault();
-        });
+  <div id="overlay"></div>
+  <div id="playerPopup">
+    <video id="videoPlayer" autoplay playsinline></video>
+  </div>
 
-        let hls;
-        const videoContainer = document.querySelector('.video-container');
-        const videoPlayer = document.getElementById('videoPlayer');
+  <script>
+    const m3uUrl = "https://m3u.ch/pl/4d85b29c87b424bd486db25f2249a357_13ba9be7da20c71fa6082e74d7091e20.m3u";
+    const channelList = document.getElementById("channelList");
+    const videoPlayer = document.getElementById("videoPlayer");
+    const playerPopup = document.getElementById("playerPopup");
+    const overlay = document.getElementById("overlay");
 
-        function shouldPlayInline(videoUrl) {
-            return videoUrl.startsWith('https://stream.sainaertebat.com/') || 
-                   videoUrl.startsWith('https://vps.vffddd.online:8880') || 
-                   videoUrl.startsWith('http://109.176.30.135');
+    async function loadChannels() {
+      try {
+        const res = await fetch(m3uUrl);
+        const text = await res.text();
+        const lines = text.split("\n");
+        let channels = [];
+
+        for (let i = 0; i < lines.length; i++) {
+          if (lines[i].startsWith("#EXTINF")) {
+            const name = lines[i].split(",")[1] || "قناة";
+            const url = lines[i + 1];
+            if (url && url.startsWith("http")) {
+              channels.push({ name, url });
+            }
+          }
         }
 
-        function openVideo(videoUrl, packageName) {
-            if (shouldPlayInline(videoUrl)) {
-                showVideoPlayer(videoUrl);
-            } else {
-                const intentUrl = `intent:${videoUrl}#Intent;package=${packageName};end;`;
-                window.location.href = intentUrl;
-            }
-        }
-
-        function showVideoPlayer(videoUrl) {
-            videoContainer.style.display = 'block';
-            document.body.style.overflow = 'hidden';
-
-            if (hls) {
-                hls.destroy();
-            }
-
-            if (videoPlayer.canPlayType('application/vnd.apple.mpegurl')) {
-                videoPlayer.src = videoUrl;
-                videoPlayer.play();
-            } else if (Hls.isSupported()) {
-                hls = new Hls();
-                hls.loadSource(videoUrl);
-                hls.attachMedia(videoPlayer);
-                hls.on(Hls.Events.MANIFEST_PARSED, () => videoPlayer.play());
-            } else {
-                alert('المتصفح لا يدعم تشغيل هذا الفيديو');
-            }
-        }
-
-        // إغلاق المشغل
-        document.querySelector('.close-btn').addEventListener('click', () => {
-            videoContainer.style.display = 'none';
-            document.body.style.overflow = 'auto';
+        channelList.innerHTML = "";
+        channels.forEach(ch => {
+          const div = document.createElement("div");
+          div.className = "channel";
+          div.innerHTML = `<span>${ch.name}</span>`;
+          div.onclick = () => {
+            // إيقاف الفيديو القديم قبل تشغيل الجديد
             videoPlayer.pause();
-            if (hls) {
-                hls.destroy();
-            }
+            videoPlayer.src = ch.url;
+            videoPlayer.muted = false; // إزالة الكتم
+            videoPlayer.autoplay = true; // التأكد من التشغيل التلقائي
+            playerPopup.style.display = "block";
+            overlay.style.display = "block";
+
+            // تحميل الفيديو وتشغيله مباشرة
+            videoPlayer.load();
+            videoPlayer.play().catch(e => console.log("خطأ تشغيل:", e));
+          };
+          channelList.appendChild(div);
         });
 
-        // تعديل حجم الفيديو عند تغيير الاتجاه
-        window.addEventListener('resize', () => {
-            videoPlayer.style.objectFit = window.innerHeight > window.innerWidth ? 'contain' : 'fill';
-        });
-    </script>
-<script type="text/javascript" src="https://s.skimresources.com/js/282372X1768714.skimlinks.js"></script>
+      } catch (err) {
+        channelList.innerHTML = "<p style='color: red;'>تعذر تحميل القنوات حالياً.</p>";
+        console.error(err);
+      }
+    }
+
+    function closePlayer() {
+      videoPlayer.pause();
+      videoPlayer.src = "";
+      playerPopup.style.display = "none";
+      overlay.style.display = "none";
+    }
+
+    overlay.onclick = closePlayer;
+    playerPopup.onclick = closePlayer;
+
+    loadChannels();
+  </script>
+
 </body>
 </html>
