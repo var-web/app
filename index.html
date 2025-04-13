@@ -124,7 +124,24 @@
       border-radius: 10px;    
       overflow: hidden;    
     }    
-    #popupBox iframe { width: 100%; height: 100%; border: none; }    
+    #popupBox::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: black;
+      z-index: 5;
+      pointer-events: none;
+    }
+    #popupBox iframe { 
+      width: 100%; 
+      height: 100%; 
+      border: none; 
+      position: relative; 
+      z-index: 1;
+    }    
     #closePopup {    
       position: absolute;    
       top: 8px;    
@@ -260,7 +277,6 @@
             videoPlayer.load();    
             videoPlayer.play().catch(e => console.log("خطأ تشغيل:", e));    
   
-            // === وضع ملء الشاشة تلقائياً ===
             if (videoPlayer.requestFullscreen) {
               videoPlayer.requestFullscreen();
             } else if (videoPlayer.webkitRequestFullscreen) {
