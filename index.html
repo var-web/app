@@ -3,7 +3,7 @@
 <head>  
   <meta charset="UTF-8" />  
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>  
-  <title> VAR</title>  
+  <title>VAR</title>  
   <style>  
     body {  
       margin: 0;  
@@ -12,28 +12,24 @@
       color: #f1f1f1;  
       user-select: none;  
     }  
-
     * {  
       -webkit-user-select: none;  
       -moz-user-select: none;  
       -ms-user-select: none;  
       -webkit-tap-highlight-color: transparent;  
     }  
-
     header {  
       padding: 25px;  
       text-align: center;  
       background: #1a1a1a;  
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);  
     }  
-
     header h1 {  
       margin: 0;  
       font-size: 2em;  
       color: #00bcd4;  
       letter-spacing: 2px;  
     }  
-
     #shareGate {  
       text-align: center;  
       padding: 40px 20px;  
@@ -43,7 +39,6 @@
       justify-content: center;  
       height: 80vh;  
     }  
-
     .share-btn {  
       display: inline-block;  
       margin: 10px;  
@@ -55,28 +50,11 @@
       cursor: pointer;  
       transition: background 0.3s ease, transform 0.2s ease;  
     }  
-
-    .whatsapp {  
-      background: #2e2e2e;  
-      color: #25d366;  
-    }  
-
-    .telegram {  
-      background: #2e2e2e;  
-      color: #0088cc;  
-    }  
-
-    .share-btn:hover {  
-      background: #333;  
-      transform: translateY(-2px);  
-    }  
-
-    #feedback {  
-      margin-top: 20px;  
-      font-size: 1em;  
-      color: #cccccc;  
-    }  
-
+    .whatsapp { background: #2e2e2e; color: #25d366; }  
+    .telegram { background: #2e2e2e; color: #0088cc; }  
+    .native-share { background: #2e2e2e; color: #00bcd4; }  
+    .share-btn:hover { background: #333; transform: translateY(-2px); }  
+    #feedback { margin-top: 20px; font-size: 1em; color: #cccccc; }  
     #confirmEnter {  
       margin-top: 25px;  
       padding: 10px 22px;  
@@ -89,7 +67,6 @@
       cursor: pointer;  
       display: none;  
     }  
-
     #channelList {  
       display: none;  
       padding: 20px;  
@@ -97,7 +74,6 @@
       grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));  
       gap: 20px;  
     }  
-
     .channel {  
       background: #1e1e1e;  
       padding: 20px;  
@@ -106,19 +82,9 @@
       cursor: pointer;  
       text-align: center;  
     }  
-
-    .channel span {  
-      font-size: 1.1em;  
-      color: #fff;  
-      font-weight: 500;  
-    }  
-
-    .channel:hover {  
-      background: #2a2a2a;  
-    }  
-
-    #overlay,  
-    #playerPopup {  
+    .channel span { font-size: 1.1em; color: #fff; font-weight: 500; }  
+    .channel:hover { background: #2a2a2a; }  
+    #overlay, #playerPopup {  
       display: none;  
       position: fixed;  
       top: 0;  
@@ -127,29 +93,16 @@
       height: 100%;  
       z-index: 1000;  
     }  
-
-    #overlay {  
-      background: rgba(0, 0, 0, 0.8);  
-    }  
-
-    #playerPopup {  
-      background: black;  
-      z-index: 1001;  
-    }  
-
+    #overlay { background: rgba(0, 0, 0, 0.8); }  
+    #playerPopup { background: black; z-index: 1001; }  
     #playerPopup video {  
       width: 100%;  
       height: 100%;  
       object-fit: contain;  
     }  
-
     @media screen and (orientation: landscape) {  
-      #playerPopup video {  
-        object-fit: fill;  
-      }  
+      #playerPopup video { object-fit: fill; }  
     }  
-
-    /* popup styles */  
     #popupContainer {  
       position: fixed;  
       top: 0;  
@@ -162,7 +115,6 @@
       justify-content: center;  
       z-index: 2000;  
     }  
-
     #popupBox {  
       position: relative;  
       width: 90%;  
@@ -172,13 +124,7 @@
       border-radius: 10px;  
       overflow: hidden;  
     }  
-
-    #popupBox iframe {  
-      width: 100%;  
-      height: 100%;  
-      border: none;  
-    }  
-
+    #popupBox iframe { width: 100%; height: 100%; border: none; }  
     #closePopup {  
       position: absolute;  
       top: 8px;  
@@ -193,10 +139,8 @@
 <body>  
 
   <div id="shareGate">  
-    <p>   يرجى مشاركة رابط تطبيق ڤار لتلاث أشخاص لتتمكن من الدخول  </p>  
-
-    <button class="share-btn whatsapp" onclick="shareVia('whatsapp')">مشاركة واتساب</button>  
-    <button class="share-btn telegram" onclick="shareVia('telegram')">مشاركة تيليجرام</button>  
+    <p>يرجى مشاركة رابط تطبيق ڤار لتلاث أشخاص عبر واتساب او تلغرام لتتمكن من الدخول</p>  
+    <div id="shareButtons"></div>  
     <div id="feedback"></div>  
     <button id="confirmEnter" onclick="allowEntry()">الدخول الآن</button>  
   </div>  
@@ -207,7 +151,6 @@
     <video id="videoPlayer" autoplay playsinline></video>  
   </div>  
 
-  <!-- popup window -->  
   <div id="popupContainer">  
     <div id="popupBox">  
       <span id="closePopup" onclick="document.getElementById('popupContainer').style.display='none'">&times;</span>  
@@ -216,24 +159,51 @@
   </div>  
 
   <script>  
-    const message = encodeURIComponent("أفضل تطبيق لمشاهدة المباريات المباشرة و القديمة : https://apkpure.com/var/var.apliclca/downloading");  
+    const shareText = "أفضل تطبيق لمشاهدة المباريات المباشرة و القديمة : https://apkpure.com/var/var.apliclca/downloading";  
+    const message = encodeURIComponent(shareText);  
     const m3uUrl = "https://m3u.ch/pl/4d85b29c87b424bd486db25f2249a357_13ba9be7da20c71fa6082e74d7091e20.m3u";  
     const channelList = document.getElementById("channelList");  
     const videoPlayer = document.getElementById("videoPlayer");  
     const playerPopup = document.getElementById("playerPopup");  
     const overlay = document.getElementById("overlay");  
-
+    const shareButtons = document.getElementById("shareButtons");  
     let clickTime = 0;  
 
-    function shareVia(platform) {  
-      clickTime = Date.now();  
-      let url = '';  
-      if (platform === 'whatsapp') {  
-        url = `https://wa.me/?text=${message}`;  
-      } else if (platform === 'telegram') {  
-        url = `https://t.me/share/url?url=${message}`;  
+    function createShareButtons() {  
+      if (navigator.share) {  
+        const btn = document.createElement("button");  
+        btn.className = "share-btn native-share";  
+        btn.textContent = "مشاركة الرابط";  
+        btn.onclick = async () => {  
+          clickTime = Date.now();  
+          try {  
+            await navigator.share({ text: shareText });  
+          } catch (err) {  
+            window.open(`https://wa.me/?text=${message}`, '_blank');  
+            setTimeout(() => window.open(`https://t.me/share/url?url=${message}`, '_blank'), 1000);  
+          }  
+        };  
+        shareButtons.appendChild(btn);  
+      } else {  
+        const btnWA = document.createElement("button");  
+        btnWA.className = "share-btn whatsapp";  
+        btnWA.textContent = "مشاركة واتساب";  
+        btnWA.onclick = () => {  
+          clickTime = Date.now();  
+          window.open(`https://wa.me/?text=${message}`, '_blank');  
+        };  
+
+        const btnTG = document.createElement("button");  
+        btnTG.className = "share-btn telegram";  
+        btnTG.textContent = "مشاركة تيليجرام";  
+        btnTG.onclick = () => {  
+          clickTime = Date.now();  
+          window.open(`https://t.me/share/url?url=${message}`, '_blank');  
+        };  
+
+        shareButtons.appendChild(btnWA);  
+        shareButtons.appendChild(btnTG);  
       }  
-      window.open(url, '_blank');  
     }  
 
     document.addEventListener('visibilitychange', () => {  
@@ -249,7 +219,6 @@
           feedback.textContent = "تمت المشاركة بنجاح اضغط على الزر للدخول.";  
           confirmBtn.style.display = "inline-block";  
         }  
-
         clickTime = 0;  
       }  
     });  
@@ -294,7 +263,6 @@
           };  
           channelList.appendChild(div);  
         });  
-
       } catch (err) {  
         channelList.innerHTML = "<p style='color: red;'>تعذر تحميل القنوات حالياً.</p>";  
         console.error(err);  
@@ -308,8 +276,8 @@
       overlay.style.display = "none";  
     }  
 
-    // فتح البوب اب تلقائياً بعد ثانية  
     window.addEventListener('load', () => {  
+      createShareButtons();  
       setTimeout(() => {  
         document.getElementById('popupContainer').style.display = 'flex';  
       }, 1000);  
