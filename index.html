@@ -1,205 +1,319 @@
-<!DOCTYPE html>
-<html lang="ar">
-<head>
-  <meta charset="UTF-8">
-  <title></title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body {
-      margin: 0;
-      background: radial-gradient(circle, #1a1a1a, #121212);
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      color: #eee;
-    }
+<!DOCTYPE html>  
+<html lang="ar">  
+<head>  
+  <meta charset="UTF-8" />  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>  
+  <title> VAR</title>  
+  <style>  
+    body {  
+      margin: 0;  
+      background: #121212;  
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;  
+      color: #f1f1f1;  
+      user-select: none;  
+    }  
 
-    header {
-      padding: 30px;
-      text-align: center;
-      background: #121212;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
-      position: sticky;
-      top: 0;
-      z-index: 999;
-    }
+    * {  
+      -webkit-user-select: none;  
+      -moz-user-select: none;  
+      -ms-user-select: none;  
+      -webkit-tap-highlight-color: transparent;  
+    }  
 
-    header h1 {
-      margin: 0;
-      font-size: 3em;
-      color: #ff00ff;
-      text-shadow: 0 0 10px rgba(255, 0, 255, 0.7), 0 0 20px rgba(255, 0, 255, 0.5);
-      letter-spacing: 4px;
-      font-weight: bold;
-    }
+    header {  
+      padding: 25px;  
+      text-align: center;  
+      background: #1a1a1a;  
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);  
+    }  
 
-    #channelList {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-      gap: 20px;
-      padding: 40px;
-    }
+    header h1 {  
+      margin: 0;  
+      font-size: 2em;  
+      color: #00bcd4;  
+      letter-spacing: 2px;  
+    }  
 
-    .channel {
-      background: linear-gradient(45deg, #2a2a2a, #333);
-      padding: 25px;
-      border-radius: 16px;
-      box-shadow: 0 4px 15px rgba(0, 255, 255, 0.2);
-      cursor: pointer;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      text-align: center;
-      overflow: hidden;
-    }
+    #shareGate {  
+      text-align: center;  
+      padding: 40px 20px;  
+      display: flex;  
+      flex-direction: column;  
+      align-items: center;  
+      justify-content: center;  
+      height: 80vh;  
+    }  
 
-    .channel:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 10px 25px rgba(0, 255, 255, 0.5);
-    }
+    .share-btn {  
+      display: inline-block;  
+      margin: 10px;  
+      padding: 12px 22px;  
+      font-size: 1em;  
+      border: none;  
+      border-radius: 8px;  
+      font-weight: 500;  
+      cursor: pointer;  
+      transition: background 0.3s ease, transform 0.2s ease;  
+    }  
 
-    .channel span {
-      font-size: 1.2em;
-      color: #fff;
-      font-weight: bold;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      transition: color 0.3s ease;
-    }
+    .whatsapp {  
+      background: #2e2e2e;  
+      color: #25d366;  
+    }  
 
-    .channel:hover span {
-      color: #00ffff;
-    }
+    .telegram {  
+      background: #2e2e2e;  
+      color: #0088cc;  
+    }  
 
-    #overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.8);
-      display: none;
-      z-index: 1000;
-      cursor: pointer;
-    }
+    .share-btn:hover {  
+      background: #333;  
+      transform: translateY(-2px);  
+    }  
 
-    #playerPopup {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: black;
-      z-index: 1001;
-      display: none;
-      animation: fadeIn 0.5s ease-out;
-    }
+    #feedback {  
+      margin-top: 20px;  
+      font-size: 1em;  
+      color: #cccccc;  
+    }  
 
-    #playerPopup video {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      pointer-events: none;
-      background: black;
-    }
+    #confirmEnter {  
+      margin-top: 25px;  
+      padding: 10px 22px;  
+      background: #00bcd4;  
+      border: none;  
+      border-radius: 6px;  
+      font-size: 1em;  
+      color: #fff;  
+      font-weight: bold;  
+      cursor: pointer;  
+      display: none;  
+    }  
 
-    @media screen and (orientation: landscape) {
-      #playerPopup video {
-        object-fit: fill;
-      }
-    }
+    #channelList {  
+      display: none;  
+      padding: 20px;  
+      display: grid;  
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));  
+      gap: 20px;  
+    }  
 
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-      }
-      to {
-        opacity: 1;
-      }
-    }
-    body {
-  user-select: none; /* يمنع تحديد النص */
-}
+    .channel {  
+      background: #1e1e1e;  
+      padding: 20px;  
+      border-radius: 10px;  
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);  
+      cursor: pointer;  
+      text-align: center;  
+    }  
 
-* {
-  -webkit-user-select: none; /* على المتصفحات التي تعتمد على WebKit */
-  -moz-user-select: none; /* على المتصفحات التي تعتمد على Mozilla */
-  -ms-user-select: none; /* على متصفحات مايكروسوفت */
-}
-    *
-    {-webkit-tap-highlight-color:
-    transparent;}
-  </style>
-</head>
-<body>
+    .channel span {  
+      font-size: 1.1em;  
+      color: #fff;  
+      font-weight: 500;  
+    }  
 
+    .channel:hover {  
+      background: #2a2a2a;  
+    }  
 
-  <div id="channelList"></div>
+    #overlay,  
+    #playerPopup {  
+      display: none;  
+      position: fixed;  
+      top: 0;  
+      left: 0;  
+      width: 100%;  
+      height: 100%;  
+      z-index: 1000;  
+    }  
 
-  <div id="overlay"></div>
-  <div id="playerPopup">
-    <video id="videoPlayer" autoplay playsinline></video>
-  </div>
+    #overlay {  
+      background: rgba(0, 0, 0, 0.8);  
+    }  
 
-  <script>
-    const m3uUrl = "https://m3u.ch/pl/4d85b29c87b424bd486db25f2249a357_13ba9be7da20c71fa6082e74d7091e20.m3u";
-    const channelList = document.getElementById("channelList");
-    const videoPlayer = document.getElementById("videoPlayer");
-    const playerPopup = document.getElementById("playerPopup");
-    const overlay = document.getElementById("overlay");
+    #playerPopup {  
+      background: black;  
+      z-index: 1001;  
+    }  
 
-    async function loadChannels() {
-      try {
-        const res = await fetch(m3uUrl);
-        const text = await res.text();
-        const lines = text.split("\n");
-        let channels = [];
+    #playerPopup video {  
+      width: 100%;  
+      height: 100%;  
+      object-fit: contain;  
+    }  
 
-        for (let i = 0; i < lines.length; i++) {
-          if (lines[i].startsWith("#EXTINF")) {
-            const name = lines[i].split(",")[1] || "قناة";
-            const url = lines[i + 1];
-            if (url && url.startsWith("http")) {
-              channels.push({ name, url });
-            }
-          }
-        }
+    @media screen and (orientation: landscape) {  
+      #playerPopup video {  
+        object-fit: fill;  
+      }  
+    }  
 
-        channelList.innerHTML = "";
-        channels.forEach(ch => {
-          const div = document.createElement("div");
-          div.className = "channel";
-          div.innerHTML = `<span>${ch.name}</span>`;
-          div.onclick = () => {
-            // إيقاف الفيديو القديم قبل تشغيل الجديد
-            videoPlayer.pause();
-            videoPlayer.src = ch.url;
-            videoPlayer.muted = false; // إزالة الكتم
-            videoPlayer.autoplay = true; // التأكد من التشغيل التلقائي
-            playerPopup.style.display = "block";
-            overlay.style.display = "block";
+    /* popup styles */  
+    #popupContainer {  
+      position: fixed;  
+      top: 0;  
+      left: 0;  
+      width: 100%;  
+      height: 100%;  
+      background-color: rgba(0,0,0,0.8);  
+      display: none;  
+      align-items: center;  
+      justify-content: center;  
+      z-index: 2000;  
+    }  
 
-            // تحميل الفيديو وتشغيله مباشرة
-            videoPlayer.load();
-            videoPlayer.play().catch(e => console.log("خطأ تشغيل:", e));
-          };
-          channelList.appendChild(div);
-        });
+    #popupBox {  
+      position: relative;  
+      width: 90%;  
+      max-width: 600px;  
+      height: 80%;  
+      background: #1e1e1e;  
+      border-radius: 10px;  
+      overflow: hidden;  
+    }  
 
-      } catch (err) {
-        channelList.innerHTML = "<p style='color: red;'>تعذر تحميل القنوات حالياً.</p>";
-        console.error(err);
-      }
-    }
+    #popupBox iframe {  
+      width: 100%;  
+      height: 100%;  
+      border: none;  
+    }  
 
-    function closePlayer() {
-      videoPlayer.pause();
-      videoPlayer.src = "";
-      playerPopup.style.display = "none";
-      overlay.style.display = "none";
-    }
+    #closePopup {  
+      position: absolute;  
+      top: 8px;  
+      right: 12px;  
+      font-size: 24px;  
+      color: white;  
+      cursor: pointer;  
+      z-index: 10;  
+    }  
+  </style>  
+</head>  
+<body>  
 
-    overlay.onclick = closePlayer;
-    playerPopup.onclick = closePlayer;
+  <div id="shareGate">  
+    <p>   يرجى مشاركة رابط تطبيق ڤار لتلاث أشخاص لتتمكن من الدخول  </p>  
 
-    loadChannels();
-  </script>
+    <button class="share-btn whatsapp" onclick="shareVia('whatsapp')">مشاركة واتساب</button>  
+    <button class="share-btn telegram" onclick="shareVia('telegram')">مشاركة تيليجرام</button>  
+    <div id="feedback"></div>  
+    <button id="confirmEnter" onclick="allowEntry()">الدخول الآن</button>  
+  </div>  
 
-</body>
+  <div id="channelList"></div>  
+  <div id="overlay" onclick="closePlayer()"></div>  
+  <div id="playerPopup" onclick="closePlayer()">  
+    <video id="videoPlayer" autoplay playsinline></video>  
+  </div>  
+
+  <!-- popup window -->  
+  <div id="popupContainer">  
+    <div id="popupBox">  
+      <span id="closePopup" onclick="document.getElementById('popupContainer').style.display='none'">&times;</span>  
+      <iframe src="https://www.profitableratecpm.com/e1r7gz70wx?key=c59bdf5dd8b1ff70073480a900b9e825"></iframe>  
+    </div>  
+  </div>  
+
+  <script>  
+    const message = encodeURIComponent("أفضل تطبيق لمشاهدة المباريات المباشرة و القديمة : https://apkpure.com/var/var.apliclca/downloading");  
+    const m3uUrl = "https://m3u.ch/pl/4d85b29c87b424bd486db25f2249a357_13ba9be7da20c71fa6082e74d7091e20.m3u";  
+    const channelList = document.getElementById("channelList");  
+    const videoPlayer = document.getElementById("videoPlayer");  
+    const playerPopup = document.getElementById("playerPopup");  
+    const overlay = document.getElementById("overlay");  
+
+    let clickTime = 0;  
+
+    function shareVia(platform) {  
+      clickTime = Date.now();  
+      let url = '';  
+      if (platform === 'whatsapp') {  
+        url = `https://wa.me/?text=${message}`;  
+      } else if (platform === 'telegram') {  
+        url = `https://t.me/share/url?url=${message}`;  
+      }  
+      window.open(url, '_blank');  
+    }  
+
+    document.addEventListener('visibilitychange', () => {  
+      if (document.visibilityState === 'visible' && clickTime > 0) {  
+        const diff = (Date.now() - clickTime) / 1000;  
+        const feedback = document.getElementById("feedback");  
+        const confirmBtn = document.getElementById("confirmEnter");  
+
+        if (diff < 10) {  
+          feedback.textContent = "يبدو أنك لم ترسل الرابط، حاول مرة أخرى.";  
+          confirmBtn.style.display = "none";  
+        } else {  
+          feedback.textContent = "تمت المشاركة بنجاح اضغط على الزر للدخول.";  
+          confirmBtn.style.display = "inline-block";  
+        }  
+
+        clickTime = 0;  
+      }  
+    });  
+
+    function allowEntry() {  
+      document.getElementById("shareGate").style.display = "none";  
+      channelList.style.display = "grid";  
+      loadChannels();  
+    }  
+
+    async function loadChannels() {  
+      try {  
+        const res = await fetch(m3uUrl);  
+        const text = await res.text();  
+        const lines = text.split("\n");  
+        let channels = [];  
+
+        for (let i = 0; i < lines.length; i++) {  
+          if (lines[i].startsWith("#EXTINF")) {  
+            const name = lines[i].split(",")[1] || "قناة";  
+            const url = lines[i + 1];  
+            if (url && url.startsWith("http")) {  
+              channels.push({ name, url });  
+            }  
+          }  
+        }  
+
+        channelList.innerHTML = "";  
+        channels.forEach(ch => {  
+          const div = document.createElement("div");  
+          div.className = "channel";  
+          div.innerHTML = `<span>${ch.name}</span>`;  
+          div.onclick = () => {  
+            videoPlayer.pause();  
+            videoPlayer.src = ch.url;  
+            videoPlayer.muted = false;  
+            videoPlayer.autoplay = true;  
+            playerPopup.style.display = "block";  
+            overlay.style.display = "block";  
+            videoPlayer.load();  
+            videoPlayer.play().catch(e => console.log("خطأ تشغيل:", e));  
+          };  
+          channelList.appendChild(div);  
+        });  
+
+      } catch (err) {  
+        channelList.innerHTML = "<p style='color: red;'>تعذر تحميل القنوات حالياً.</p>";  
+        console.error(err);  
+      }  
+    }  
+
+    function closePlayer() {  
+      videoPlayer.pause();  
+      videoPlayer.src = "";  
+      playerPopup.style.display = "none";  
+      overlay.style.display = "none";  
+    }  
+
+    // فتح البوب اب تلقائياً بعد ثانية  
+    window.addEventListener('load', () => {  
+      setTimeout(() => {  
+        document.getElementById('popupContainer').style.display = 'flex';  
+      }, 1000);  
+    });  
+  </script>  
+</body>  
 </html>
