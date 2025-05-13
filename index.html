@@ -83,7 +83,6 @@
   
     .screenshot {  
       width: 100%;  
-      
       position: relative;  
       top: 0;  
     }  
@@ -200,15 +199,17 @@
         <p class="description">  
           تطبيق VAR يقدم لك تجربة محاكاة رائعة لتقنية حكم الفيديو في كرة القدم، مع واجهة أنيقة وسهلة الاستخدام.  
         </p>  
-        <button class="download-btn" onclick="downloadAPK()">  
+        <a href="https://www.dropbox.com/scl/fi/pgd0omhvogf4c3abtfzkt/VAR.apk?rlkey=eq5old235rsv150rdmctdrxdd&st=0b1f4rtp&raw=1" 
+           class="download-btn" 
+           onclick="showLoading()" 
+           download>
           <span>تنزيل التطبيق</span>  
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">  
             <path d="M12 2V15" stroke="white" stroke-width="2" stroke-linecap="round"/>  
             <path d="M5 12L12 19L19 12" stroke="white" stroke-width="2" stroke-linecap="round"/>  
             <path d="M2 22H22" stroke="white" stroke-width="2" stroke-linecap="round"/>  
           </svg>  
-        </button>  
-        <iframe id="downloadFrame" style="display:none;"></iframe>  
+        </a>  
       </div>  
     </div>  
   
@@ -234,15 +235,13 @@
   </div>
   
   <script>  
-    function downloadAPK() {
-      const url = "https://apkpure.com/var/var.var/downloading";
+    function showLoading() {
       const overlay = document.getElementById('loadingOverlay');
       overlay.style.display = 'flex';
-      
+
       setTimeout(() => {
-        document.getElementById('downloadFrame').src = url;
         overlay.style.display = 'none';
-      }, 1000000000); // 2 ثوانٍ قبل التحميل
+      }, 5000); // إخفاء التحميل بعد 3 ثوانٍ تقريبًا
     }
   </script>  
 </body>  
