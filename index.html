@@ -1,190 +1,249 @@
 <!DOCTYPE html>  
 <html lang="ar" dir="rtl">  
 <head>  
-    <meta charset="UTF-8">  
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
-    <title>VAR</title>  
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">  
-    <style>  
-        * {  
-            margin: 0;  
-            padding: 0;  
-            box-sizing: border-box;  
-            font-family: 'Cairo', sans-serif;  
-        }  
+  <meta charset="UTF-8">  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+  <title>VAR</title>  
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">  
+  <style>  
+    * {  
+      margin: 0;  
+      padding: 0;  
+      box-sizing: border-box;  
+      font-family: 'Cairo', sans-serif;  
+      -webkit-tap-highlight-color: transparent;  
+    }  
   
-        body {  
-            background: #000;  
-            color: #fff;  
-            min-height: 100vh;  
-            padding: 40px 20px;  
-        }  
+    body {  
+      background: #000;  
+      color: #fff;  
+      min-height: 100vh;  
+      padding: 20px;  
+      overflow-x: hidden;  
+    }  
   
-        .container {  
-            max-width: 1200px;  
-            margin: 0 auto;  
-            animation: fadeIn 1s ease-in;  
-        }  
+    .container {  
+      max-width: 1200px;  
+      margin: 0 auto;  
+      animation: fadeIn 1s ease-in;  
+    }  
   
-        .header-section {  
-            display: flex;  
-            gap: 60px;  
-            align-items: center;  
-            margin-bottom: 60px;  
-            flex-wrap: wrap;  
-        }  
+    .header-section {  
+      display: flex;  
+      gap: 40px;  
+      align-items: center;  
+      margin-bottom: 40px;  
+      flex-wrap: wrap;  
+    }  
   
-        .app-icon {  
-            width: 150px;  
-            height: 150px;  
-            border-radius: 30px;  
-            box-shadow: 0 10px 30px rgba(82, 182, 154, 0.3);  
-            flex-shrink: 0;  
-            border: 3px solid #52b69a;  
-        }  
+    .app-icon {  
+      width: 120px;  
+      height: 120px;  
+      border-radius: 20px;  
+      box-shadow: 0 10px 30px rgba(82, 182, 154, 0.3);  
+      border: 3px solid #52b69a;  
+    }  
   
-        .info {  
-            flex: 1;  
-            text-align: right;  
-        }  
+    .info {  
+      flex: 1;  
+      text-align: right;  
+    }  
   
-        h1 {  
-            font-size: 2.8rem;  
-            margin-bottom: 20px;  
-            color: #52b69a;  
-            text-shadow: 0 2px 4px rgba(82, 182, 154, 0.3);  
-        }  
+    h1 {  
+      font-size: 28px;  
+      margin-bottom: 15px;  
+      color: #52b69a;  
+      text-shadow: 0 2px 4px rgba(82, 182, 154, 0.3);  
+    }  
   
-        .description {  
-            font-size: 1.3rem;  
-            line-height: 1.9;  
-            margin-bottom: 30px;  
-            color: #ddd;  
-            max-width: 600px;  
-        }  
+    .description {  
+      font-size: 16px;  
+      line-height: 1.8;  
+      margin-bottom: 25px;  
+      color: #ddd;  
+      max-width: 600px;  
+    }  
   
-        .screenshots {  
-            display: grid;  
-            grid-template-columns: repeat(3, 1fr);  
-            gap: 30px;  
-            margin-bottom: 40px;  
-        }  
+    .screenshots {  
+      display: grid;  
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));  
+      gap: 10px;  
+      margin-bottom: 10px;  
+    }  
   
-        .screenshot-container {  
-            width: 100%;  
-            aspect-ratio: 9/16;  
-            overflow: hidden;  
-            border-radius: 20px;  
-            border: 3px solid #52b69a;  
-            position: relative;  
-        }  
+    .screenshot-container {  
+      width: 100%;  
+      aspect-ratio: 9 / 16;  
+      overflow: hidden;  
+      border-radius: 15px;  
+      border: 3px solid #52b69a;  
+      position: relative;  
+      height: 100%;
+    }  
   
-        .screenshot {  
-            width: 100%;  
-            position: absolute;  
-            top: 0;  
-            animation: floatImage 6s ease-in-out infinite alternate;  
-        }  
+    .screenshot {  
+      width: 100%;  
+      
+      position: relative;  
+      top: 0;  
+    }  
   
-        @keyframes floatImage {  
-            0% {  
-                top: 0;  
-            }  
+    .download-btn {  
+      background: linear-gradient(45deg, #52b69a, #34a0a4);  
+      color: white;  
+      padding: 14px 40px;  
+      font-size: 18px;  
+      border: none;  
+      border-radius: 30px;  
+      cursor: pointer;  
+      transition: all 0.3s ease;  
+      text-decoration: none;  
+      display: inline-flex;  
+      align-items: center;  
+      gap: 8px;  
+    }  
   
-            100% {  
-                top: -100%;  
-            }  
-        }  
+    .download-btn:hover {  
+      transform: scale(1.05);  
+      box-shadow: 0 10px 25px rgba(82, 182, 154, 0.5);  
+    }  
   
-        .download-btn {  
-            background: linear-gradient(45deg, #52b69a, #34a0a4);  
-            color: white;  
-            padding: 18px 60px;  
-            font-size: 1.4rem;  
-            border: none;  
-            border-radius: 35px;  
-            cursor: pointer;  
-            transition: all 0.3s ease;  
-            text-decoration: none;  
-            display: inline-flex;  
-            align-items: center;  
-            gap: 10px;  
-        }  
+    @keyframes fadeIn {  
+      from {  
+        opacity: 0;  
+        transform: translateY(30px);  
+      }  
+      to {  
+        opacity: 1;  
+        transform: translateY(0);  
+      }  
+    }  
   
-        .download-btn:hover {  
-            transform: scale(1.05);  
-            box-shadow: 0 10px 25px rgba(82, 182, 154, 0.5);  
-        }  
+    @media (max-width: 600px) {  
+      .header-section {  
+        flex-direction: column;  
+        text-align: center;  
+      }  
   
-        @keyframes fadeIn {  
-            from {  
-                opacity: 0;  
-                transform: translateY(30px);  
-            }  
+      .info {  
+        text-align: center;  
+      }  
   
-            to {  
-                opacity: 1;  
-                transform: translateY(0);  
-            }  
-        }  
+      h1 {  
+        font-size: 24px;  
+      }  
   
-        @media (max-width: 992px) {  
-            .header-section {  
-                flex-direction: column;  
-                text-align: center;  
-                gap: 40px;  
-            }  
+      .description {  
+        font-size: 15px;  
+      }  
   
-            .info {  
-                text-align: center;  
-            }  
+      .download-btn {  
+        font-size: 16px;  
+        padding: 12px 30px;  
+      }  
   
-            .screenshots {  
-                grid-template-columns: 1fr;  
-                max-width: 500px;  
-                margin: 0 auto;  
-            }  
-  
-            .screenshot-container {  
-                aspect-ratio: 16/9;  
-            }  
-        }  
-  
-        * {  
-            -webkit-tap-highlight-color: transparent;  
-        }  
-    </style>  
+      .app-icon {  
+        width: 100px;  
+        height: 100px;  
+      }  
+    }
+
+    /* loading box */
+    .loading-overlay {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background: rgba(0,0,0,0.7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      display: none;
+    }
+
+    .loading-box {
+      background: #111;
+      border: 2px solid #52b69a;
+      padding: 30px 40px;
+      border-radius: 20px;
+      text-align: center;
+      color: #fff;
+      font-size: 20px;
+      box-shadow: 0 0 20px #52b69a88;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+
+    .spinner {
+      border: 5px solid #444;
+      border-top: 5px solid #52b69a;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      margin: 20px auto 0;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>  
 </head>  
 <body>  
-    <div class="container">  
-        <div class="header-section">  
-            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiW5UDYHu5EMCPKgaPVXMXGbcKANNMs4-LzjJq1A0oF4n5IQ1Sk0uKir_Ix8jx4Cu1Dd9JAVMpjcmCre8qJAmr3kz22GAoaf6pRwObnymn4ldpjViCLl44VKLl0Z9agsByHJF1-TLTcnoTxWtJKhrSt-_4QHs-Qe8lKIni1wG3Ay-tRapgNEEssdlAqfpLh/s320/Picsart_25-05-02_20-10-23-126.png" alt="App Icon" class="app-icon">  
-            <div class="info">  
-                <h1> تطبيق VAR </h1>  
-                <p class="description">  
-                </p>  
-                <a href="https://www.dropbox.com/scl/fi/pgd0omhvogf4c3abtfzkt/VAR.apk?rlkey=eq5old235rsv150rdmctdrxdd&st=0b1f4rtp&raw=1" class="download-btn" id="downloadBtn" download>  
-                    <span>تنزيل التطبيق</span>  
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">  
-                        <path d="M12 2V15" stroke="white" stroke-width="2" stroke-linecap="round"/>  
-                        <path d="M5 12L12 19L19 12" stroke="white" stroke-width="2" stroke-linecap="round"/>  
-                        <path d="M2 22H22" stroke="white" stroke-width="2" stroke-linecap="round"/>  
-                    </svg>  
-                </a>  
-            </div>  
-        </div>  
-  
-        <div class="screenshots">  
-            <div class="screenshot-container">  
-                <img src="https://www.mediafire.com/convkey/8426/ws2v4wbnqwiwlk4zg.jpg" alt="Screenshot 1" class="screenshot">  
-            </div>  
-            <div class="screenshot-container">  
-                <img src="https://www.mediafire.com/convkey/acbb/ax4k11wonjm3z8pzg.jpg" alt="Screenshot 2" class="screenshot">  
-            </div>  
-            <div class="screenshot-container">  
-                <img src="https://www.mediafire.com/convkey/bbb1/p651szpveqqatsqzg.jpg?size_id=b" alt="Screenshot 3" class="screenshot">  
-            </div>  
-        </div>  
+  <div class="container">  
+    <div class="header-section">  
+      <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiW5UDYHu5EMCPKgaPVXMXGbcKANNMs4-LzjJq1A0oF4n5IQ1Sk0uKir_Ix8jx4Cu1Dd9JAVMpjcmCre8qJAmr3kz22GAoaf6pRwObnymn4ldpjViCLl44VKLl0Z9agsByHJF1-TLTcnoTxWtJKhrSt-_4QHs-Qe8lKIni1wG3Ay-tRapgNEEssdlAqfpLh/s320/Picsart_25-05-02_20-10-23-126.png" alt="App Icon" class="app-icon">  
+      <div class="info">  
+        <h1> تطبيق VAR </h1>  
+        <p class="description">  
+          تطبيق VAR يقدم لك تجربة محاكاة رائعة لتقنية حكم الفيديو في كرة القدم، مع واجهة أنيقة وسهلة الاستخدام.  
+        </p>  
+        <button class="download-btn" onclick="downloadAPK()">  
+          <span>تنزيل التطبيق</span>  
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">  
+            <path d="M12 2V15" stroke="white" stroke-width="2" stroke-linecap="round"/>  
+            <path d="M5 12L12 19L19 12" stroke="white" stroke-width="2" stroke-linecap="round"/>  
+            <path d="M2 22H22" stroke="white" stroke-width="2" stroke-linecap="round"/>  
+          </svg>  
+        </button>  
+        <iframe id="downloadFrame" style="display:none;"></iframe>  
+      </div>  
     </div>  
+  
+    <div class="screenshots">  
+      <div class="screenshot-container">  
+        <img src="https://www.mediafire.com/convkey/8426/ws2v4wbnqwiwlk4zg.jpg" alt="Screenshot 1" class="screenshot">  
+      </div>  
+      <div class="screenshot-container">  
+        <img src="https://www.mediafire.com/convkey/acbb/ax4k11wonjm3z8pzg.jpg" alt="Screenshot 2" class="screenshot">  
+      </div>  
+      <div class="screenshot-container">  
+        <img src="https://www.mediafire.com/convkey/bbb1/p651szpveqqatsqzg.jpg" alt="Screenshot 3" class="screenshot">  
+      </div>  
+    </div>  
+  </div>
+
+  <!-- Loading Box -->
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="loading-box">
+      جاري التحميل...
+      <div class="spinner"></div>
+    </div>
+  </div>
+  
+  <script>  
+    function downloadAPK() {
+      const url = "https://www.dropbox.com/scl/fi/pgd0omhvogf4c3abtfzkt/VAR.apk?rlkey=eq5old235rsv150rdmctdrxdd&st=0b1f4rtp&raw=1";
+      const overlay = document.getElementById('loadingOverlay');
+      overlay.style.display = 'flex';
+      
+      setTimeout(() => {
+        document.getElementById('downloadFrame').src = url;
+        overlay.style.display = 'none';
+      }, 1000000000); // 2 ثوانٍ قبل التحميل
+    }
+  </script>  
 </body>  
 </html>
